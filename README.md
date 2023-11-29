@@ -7,10 +7,10 @@ Build on WSL
 ## Ray intersect Sphere
 
 $$
-\begin{align}
+\begin{aligned}
 Ray&:\qquad R(t)=\vec o+\vec dt\\
 Sphere&:\qquad S(\vec p)=||\vec p-\vec c||-r=0
-\end{align}
+\end{aligned}
 $$
 
 $$
@@ -25,12 +25,12 @@ For quadratic equations
 $$
 ax^2+bx+c=0\\
 \Delta=b^2-4ac\\
-\begin{align}
+\begin{aligned}
 x&=\frac{-b\pm\sqrt \Delta}{2a}\\
 &=\frac{-b\pm\sqrt{b^2-4ac}}{2a}\\
 &=\frac{-2b'\pm\sqrt{4b'^2-4ac}}{2a}\qquad (b=2b')\\
 &=\frac{-b'\pm\sqrt{b'^2-ac}}{a}
-\end{align}
+\end{aligned}
 $$
 
 Substitution can be obtained
