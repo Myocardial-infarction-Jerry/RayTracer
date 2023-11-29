@@ -44,7 +44,7 @@ if $t_i<0$, then the origin of the ray is ***inside the sphere*** or the sphere 
 
 ## Ray Reflection & Refraction
 
-We set normal vector $||\vec n||=1$, therefore
+For reflection, we set normal vector $||\vec n||=1$, therefore
 
 $$
 \vec n\cdot\vec I=||\vec n||\cdot||\vec I||\cdot\cos\theta=||\vec I||\cdot\cos\theta \\
@@ -56,3 +56,10 @@ Occasionally, $\vec I=\vec d$, therefore
 $$
 \vec d'=\vec d+2\vec d(\vec d\cdot\vec n)=\vec d(1+2(\vec d\cdot \vec n))
 $$
+
+For refraction, the law show that
+
+$$
+\eta\cdot\sin\theta=\eta'\cdot\sin\theta'
+$$
+

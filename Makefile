@@ -1,32 +1,49 @@
+# Compiler
 CC = g++
-CFLAGS = -Wall -Wextra -std=c++17 -g
 
-SRCDIR = src
-INCDIR = include
-OBJDIR = obj
-BINDIR = bin
+# Compiler flags
+CFLAGS = -std=c++11 -Iinclude
+CFLAGS += -I/usr/local/cuda/include
 
-SOURCES = $(wildcard $(SRCDIR)/*.cpp)
-OBJECTS = $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(SOURCES))
-EXECUTABLE = $(BINDIR)/main
+# CUDA Compiler
+NVCC = nvcc
 
-.PHONY: all clean run
+# CUDA Compiler flags
+NVCCFLAGS = -std=c++11 -Iinclude
 
-all: $(EXECUTABLE)
+# Debug flags
+DEBUGFLAGS = -g -DDEBUG
 
-$(EXECUTABLE): $(OBJECTS)
-	@mkdir -p $(BINDIR)
-	$(CC) $(CFLAGS) $^ -o $@
+# Source files
+SRCS = $(wildcard src/*.cpp)
+CU_SRCS = $(wildcard src/*.cu)
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
-	@mkdir -p $(OBJDIR)
-	$(CC) $(CFLAGS) -I$(INCDIR) -c $< -o $@
+# Object files
+OBJS = $(SRCS:.cpp=.o)
+CU_OBJS = $(CU_SRCS:.cu=.o)
 
-run: $(EXECUTABLE)
-	./$(EXECUTABLE)
+# Executable
+EXEC = myproject
 
-debug:
-	lldb ./$(EXECUTABLE)
+# Default target
+all: $(EXEC)
 
+# Compile C++ source files
+%.o: %.cpp
+	$(CC) $(CFLAGS) $(DEBUGFLAGS) -c $< -o $@
+
+# Compile CUDA source files
+%.o: %.cu
+	$(NVCC) $(NVCCFLAGS) $(DEBUGFLAGS) -c $< -o $@
+
+# Link object files into executable
+$(EXEC): $(OBJS) $(CU_OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(CU_OBJS) -o $@
+
+# Debug target
+debug: $(EXEC)
+	gdb $(EXEC)
+
+# Clean
 clean:
-	rm -rf $(OBJDIR) $(BINDIR)
+	rm -f $(OBJS) $(CU_OBJS) $(EXEC)
