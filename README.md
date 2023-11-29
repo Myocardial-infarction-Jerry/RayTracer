@@ -48,11 +48,11 @@ We set normal vector $||\vec n||=1$, therefore
 
 $$
 \vec n\cdot\vec I=||\vec n||\cdot||\vec I||\cdot\cos\theta=||\vec I||\cdot\cos\theta \\
-\vec I'=\vec I-2\vec I(\vec I\cdot\vec n)=\vec I(1-2(\vec I\cdot\vec n))
+\vec I'=\vec I+2\vec I(\vec I\cdot\vec n)=\vec I(1+2(\vec I\cdot\vec n))
 $$
 
 Occasionally, $\vec I=\vec d$, therefore
 
 $$
-\vec d'=\vec d-2\vec d(\vec d\cdot\vec n)=\vec d(1-2(\vec d\cdot \vec n))
+\vec d'=\vec d+2\vec d(\vec d\cdot\vec n)=\vec d(1+2(\vec d\cdot \vec n))
 $$
