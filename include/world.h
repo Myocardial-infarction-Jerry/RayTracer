@@ -12,7 +12,7 @@
 class world {
 public:
     std::vector<camera> cams;
-    std::vector<volume> surs;
+    std::vector<volume> vols;
 
     world();
 
