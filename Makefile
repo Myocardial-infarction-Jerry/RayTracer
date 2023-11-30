@@ -1,49 +1,27 @@
-# Compiler
-CC = g++
+CUDA_PATH     ?= /usr/local/cuda
+HOST_COMPILER  = g++
+NVCC           = $(CUDA_PATH)/bin/nvcc -ccbin $(HOST_COMPILER)
 
-# Compiler flags
-CFLAGS = -std=c++11 -Iinclude
-CFLAGS += -I/usr/local/cuda/include
+# select one of these for Debug vs. Release
+#NVCC_DBG       = -g -G
+NVCC_DBG       =
 
-# CUDA Compiler
-NVCC = nvcc
+NVCCFLAGS      = $(NVCC_DBG) -m64
+GENCODE_FLAGS  = -gencode arch=compute_86,code=sm_86
 
-# CUDA Compiler flags
-NVCCFLAGS = -std=c++11 -Iinclude
+SRCS = main.cu
+INCS = vec3.h ray.h hitable.h hitable_list.h sphere.h camera.h material.h utils.h
 
-# Debug flags
-DEBUGFLAGS = -g -DDEBUG
+cudart: cudart.o
+	$(NVCC) $(NVCCFLAGS) $(GENCODE_FLAGS) -o cudart cudart.o
 
-# Source files
-SRCS = $(wildcard src/*.cpp)
-CU_SRCS = $(wildcard src/*.cu)
+cudart.o: $(SRCS) $(INCS)
+	$(NVCC) $(NVCCFLAGS) $(GENCODE_FLAGS) -o cudart.o -c main.cu
 
-# Object files
-OBJS = $(SRCS:.cpp=.o)
-CU_OBJS = $(CU_SRCS:.cu=.o)
+run: cudart
+	rm -f out.ppm
+	./cudart > out.ppm
+	convert out.ppm out.png
 
-# Executable
-EXEC = myproject
-
-# Default target
-all: $(EXEC)
-
-# Compile C++ source files
-%.o: %.cpp
-	$(CC) $(CFLAGS) $(DEBUGFLAGS) -c $< -o $@
-
-# Compile CUDA source files
-%.o: %.cu
-	$(NVCC) $(NVCCFLAGS) $(DEBUGFLAGS) -c $< -o $@
-
-# Link object files into executable
-$(EXEC): $(OBJS) $(CU_OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(CU_OBJS) -o $@
-
-# Debug target
-debug: $(EXEC)
-	gdb $(EXEC)
-
-# Clean
 clean:
-	rm -f $(OBJS) $(CU_OBJS) $(EXEC)
+	rm -f cudart cudart.o out.ppm out.jpg
