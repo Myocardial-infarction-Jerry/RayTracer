@@ -97,9 +97,8 @@ __global__ void render(vec3 *fb, int max_x, int max_y, int ns, camera **cam, hit
 __global__ void create_world(hitable **d_list, hitable **d_world, camera **d_camera, int nx, int ny, curandState *rand_state) {
     if (threadIdx.x == 0 && blockIdx.x == 0) {
         curandState local_rand_state = *rand_state;
-        d_list[0] = new sphere(vec3(0, -10000.0, -1), 10000,
-            new lambertian(vec3(0.5, 0.5, 0.5)));
-        int i = 1;
+        int i = 0;
+        d_list[i++] = new sphere(vec3(0, -10000.0, -1), 10000, new lambertian(vec3(0.5, 0.5, 0.5)));
         for (int a = -11; a < 11; a++) {
             for (int b = -11; b < 11; b++) {
                 float choose_mat = RND;

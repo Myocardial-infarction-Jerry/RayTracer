@@ -63,3 +63,6 @@ $$
 \eta\cdot\sin\theta=\eta'\cdot\sin\theta'
 $$
 
+## Bounding Volume Hierarchies (BVH)
+
+Divide objects by Axis-Aligned Bounding Boxex

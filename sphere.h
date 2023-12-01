@@ -6,15 +6,28 @@
 class sphere : public hitable {
 public:
     __device__ sphere() {}
-    __device__ sphere(vec3 cen, float r, material *m) : center1(cen), radius(r), mat_ptr(m), is_moving(false) {};
-    __device__ sphere(point3 _center1, point3 _center2, float r, material *m) : center1(_center1), radius(r), mat_ptr(m), is_moving(true) { center_vec = _center2 - _center1; };
+    __device__ sphere(vec3 cen, float r, material *m) : center1(cen), radius(r), mat_ptr(m), is_moving(false) {
+        vec3 rvec = vec3(r, r, r);
+        bbox = aabb(cen - rvec, cen + rvec);
+    };
+    __device__ sphere(point3 _center1, point3 _center2, float r, material *m) : center1(_center1), radius(r), mat_ptr(m), is_moving(true) {
+        center_vec = _center2 - _center1;
+        vec3 rvec = vec3(r, r, r);
+        aabb box1(_center1 - rvec, _center1 + rvec);
+        aabb box2(_center2 - rvec, _center2 + rvec);
+        bbox = aabb(box1, box2);
+    };
+
     __device__ virtual bool hit(const ray &r, float tmin, float tmax, hit_record &rec) const;
+    __device__  aabb bounding_box() const { return bbox; }
     __device__ point3 sphere_center(double time) const { return center1 + time * center_vec; }
+
     vec3 center1;
     bool is_moving;
     vec3 center_vec;
     float radius;
     material *mat_ptr;
+    aabb bbox;
 };
 
 __device__ bool sphere::hit(const ray &r, float t_min, float t_max, hit_record &rec) const {
@@ -44,6 +57,5 @@ __device__ bool sphere::hit(const ray &r, float t_min, float t_max, hit_record &
     }
     return false;
 }
-
 
 #endif
