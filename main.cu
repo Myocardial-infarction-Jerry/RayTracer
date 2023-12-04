@@ -30,7 +30,7 @@ void check_cuda(cudaError_t result, char const *const func, const char *const fi
 __device__ vec3 color(const ray &r, hitable **world, curandState *local_rand_state) {
     ray cur_ray = r;
     vec3 cur_attenuation = vec3(1.0, 1.0, 1.0);
-    for (int i = 0; i < 50; i++) {
+    for (int i = 0; i < RAY_DEPTH; i++) {
         hit_record rec;
         if ((*world)->hit(cur_ray, 0.001f, FLT_MAX, rec)) {
             ray scattered;
