@@ -20,7 +20,37 @@ public:
         bbox = aabb(bbox1, bbox2);
     }
 
-    __device__ virtual bool hit(const ray &r, const interval &rayT, hitRecord &rec) const;
+    __device__ virtual bool hit(const ray &r, const interval &rayT, hitRecord &rec) const override {
+        vec3 center = isMoving ? sphereCenter(r.time()) : center0;
+        vec3 oc = r.origin() - center;
+        float a = dot(r.direction(), r.direction());
+        float b = dot(oc, r.direction());
+        float c = dot(oc, oc) - radius * radius;
+        float discriminant = b * b - a * c;
+
+        if (discriminant <= 0)
+            return false;
+
+        float temp = (-b - sqrt(discriminant)) / a;
+        if (temp < rayT.max && temp > rayT.min) {
+            rec.T = temp;
+            rec.p = r.at(rec.T);
+            rec.normal = (rec.p - center) / radius;
+            rec.matPtr = matPtr;
+            return true;
+        }
+
+        temp = (-b + sqrt(discriminant)) / a;
+        if (temp < rayT.max && temp > rayT.min) {
+            rec.T = temp;
+            rec.p = r.at(rec.T);
+            rec.normal = (rec.p - center) / radius;
+            rec.matPtr = matPtr;
+            return true;
+        }
+
+        return false;
+    }
     __device__ virtual aabb boundingBox() const { return bbox; }
     __device__ vec3 sphereCenter(double time) const { return center0 + time * centerVec; }
 
@@ -32,37 +62,5 @@ public:
     material *matPtr;
     aabb bbox;
 };
-
-__device__ bool sphere::hit(const ray &r, const interval &rayT, hitRecord &rec) const {
-    vec3 center = isMoving ? sphereCenter(r.time()) : center0;
-    vec3 oc = r.origin() - center;
-    float a = dot(r.direction(), r.direction());
-    float b = dot(oc, r.direction());
-    float c = dot(oc, oc) - radius * radius;
-    float discriminant = b * b - a * c;
-
-    if (discriminant <= 0)
-        return false;
-
-    float temp = (-b - sqrt(discriminant)) / a;
-    if (temp < rayT.max && temp > rayT.min) {
-        rec.T = temp;
-        rec.p = r.at(rec.T);
-        rec.normal = (rec.p - center) / radius;
-        rec.matPtr = matPtr;
-        return true;
-    }
-
-    temp = (-b + sqrt(discriminant)) / a;
-    if (temp < rayT.max && temp > rayT.min) {
-        rec.T = temp;
-        rec.p = r.at(rec.T);
-        rec.normal = (rec.p - center) / radius;
-        rec.matPtr = matPtr;
-        return true;
-    }
-
-    return false;
-}
 
 #endif

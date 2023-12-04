@@ -11,7 +11,7 @@
 __global__ void randInit(curandState *randState) {
     if (threadIdx.x != 0 || blockIdx.x != 0)
         return;
-    curand_init(2023, 0, 0, randState);
+    curand_init(1984, 0, 0, randState);
 }
 
 __global__ void createWorld(hittable **dWorld, camera **dCamera, int nx, int ny, curandState *randState) {
@@ -62,34 +62,34 @@ __global__ void renderInit(int maxX, int maxY, curandState *randState) {
         return;
 
     int pixelIdx = j * maxX + i;
-    curand_init(2023 + pixelIdx, 0, 0, &randState[pixelIdx]);
+    curand_init(1984 + pixelIdx, 0, 0, &randState[pixelIdx]);
 }
 
 __device__ vec3 getColor(const ray &r, hittable **world, curandState *localRandState) {
     ray curRay = r;
     vec3 curAttenuation = vec3(1.0f, 1.0f, 1.0f);
-    vec3 color(0.0f, 0.0f, 0.0f);
+    vec3 curEmitted = vec3(0.0f, 0.0f, 0.0f);
     for (int depth = 0; depth < RAY_DEPTH; ++depth) {
         hitRecord rec;
         if (!(*world)->hit(curRay, interval(0.001f, FLT_MAX), rec)) {
-            // color += curAttenuation * ((hittable_list *)(*world))->background;
-            // return;
-            vec3 unitDirection = curRay.direction().unit();
-            float t = 0.5f * (unitDirection.y() + 1.0f);
-            vec3 c = (1.0f - t) * vec3(1.0, 1.0, 1.0) + t * vec3(0.5, 0.7, 1.0);
-            return curAttenuation * c;
+            // vec3 unitDirection = curRay.direction().unit();
+            // float t = 0.5f * (unitDirection.y() + 1.0f);
+            // vec3 c = (1.0f - t) * vec3(1.0f, 1.0f, 1.0f) + t * vec3(0.5f, 0.7f, 1.0f);
+            break;
         }
 
         ray scattered;
-        vec3 attenuation;
-        vec3 colorFromEmission = rec.matPtr->emitted(0, 0, rec.p);
+        vec3 attenuation = vec3(0.0f, 0.0f, 0.0f);
+        curEmitted += curAttenuation * rec.matPtr->emitted(0.0, 0.0, attenuation);
+        if (!rec.matPtr->scatter(curRay, rec, attenuation, scattered, localRandState)) {
+            curAttenuation = vec3(0.0f, 0.0f, 0.0f);
+            break;
+        }
 
-        color += colorFromEmission * curAttenuation;
-        curRay = scattered;
         curAttenuation *= attenuation;
-        if (!rec.matPtr->scatter(r, rec, attenuation, scattered, localRandState))
-            return color;
+        curRay = scattered;
     }
+    return curAttenuation + curEmitted;
 }
 
 __global__ void render(vec3 *fb, int maxX, int maxY, int ns, camera **cam, hittable **world, curandState *randState) {
@@ -115,7 +115,7 @@ __global__ void render(vec3 *fb, int maxX, int maxY, int ns, camera **cam, hitta
 }
 
 __global__ void freeWorld(hittable **dWorld, camera **dCamera) {
-    for (hittable *cur = (*dWorld)->nextObject; cur != nullptr; cur = cur->nextObject) 
+    for (hittable *cur = (*dWorld)->nextObject; cur != nullptr; cur = cur->nextObject)
         delete cur;
     delete *dWorld;
     delete *dCamera;
@@ -125,11 +125,11 @@ int main(int argc, char const *argv[]) {
     int nx = IMAGE_WIDTH;
     int ny = IMAGE_HEIGHT;
     int ns = SAMPLE_PER_PIXEL;
-    int tx = 16;
-    int ty = 16;
+    int tx = 32;
+    int ty = 32;
+    size_t stackSize = 2048;
 
-    size_t stackSize;
-    checkCudaErrors(cudaDeviceGetLimit(&stackSize, cudaLimitStackSize));
+    checkCudaErrors(cudaDeviceSetLimit(cudaLimitStackSize, stackSize));
     std::cerr << "CUDA Stack Size Limit: " << stackSize << " bytes\n";
 
     std::cerr << "Rendering a " << nx << "x" << ny << " image with " << ns << " samples per pixel ";
@@ -170,7 +170,7 @@ int main(int argc, char const *argv[]) {
     checkCudaErrors(cudaDeviceSynchronize());
 
     auto end = std::chrono::high_resolution_clock::now();
-    std::cerr << "took " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << " ms.\n";
+    std::cerr << "took " << (float)(std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()) / 1000.0f << " s.\n";
 
     std::cout << "P3\n" << nx << " " << ny << "\n255\n";
     for (int j = ny - 1; j >= 0; j--) {

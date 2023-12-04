@@ -14,13 +14,14 @@ public:
         bbox = aabb(bbox, object->boundingBox());
     }
 
-    __device__ bool hit(const ray &r, const interval &rayT, hitRecord &rec) const override {
+    __device__ virtual bool hit(const ray &r, const interval &rayT, hitRecord &rec) const override {
         hitRecord tempRec;
         bool hitAnything = false;
         float closest = rayT.max;
 
         for (hittable *object = nextObject; object != nullptr; object = object->nextObject) {
-            if (!object->hit(r, interval(rayT.min, closest), tempRec))
+            interval ival(rayT.min, closest);
+            if (!object->hit(r, ival, tempRec))
                 continue;
 
             hitAnything = true;
@@ -31,7 +32,7 @@ public:
         return hitAnything;
     }
 
-    __device__ aabb boundingBox() const override { return bbox; }
+    __device__ virtual aabb boundingBox() const override { return bbox; }
 
     // private:
     aabb bbox;
