@@ -88,7 +88,7 @@ __device__ vec3 getColor(const ray &r, hittable **world, curandState *localRandS
         curRay = scattered;
         curAttenuation *= attenuation;
         if (!rec.matPtr->scatter(r, rec, attenuation, scattered, localRandState))
-            return;
+            return color;
     }
 }
 
@@ -102,9 +102,7 @@ __global__ void render(vec3 *fb, int maxX, int maxY, int ns, camera **cam, hitta
     curandState localRandState = randState[pixelIdx];
     vec3 color(0, 0, 0);
     for (int s = 0; s < ns; ++s) {
-        float u = float(i + RND) / float(maxX);
-        float v = float(j + RND) / float(maxY);
-        ray r = (*cam)->getRay(u, v, &localRandState);
+        ray r = (*cam)->getRay(float(i + RND) / float(maxX), float(j + RND) / float(maxY), &localRandState);
         color += getColor(r, world, &localRandState);
     }
 
@@ -117,10 +115,8 @@ __global__ void render(vec3 *fb, int maxX, int maxY, int ns, camera **cam, hitta
 }
 
 __global__ void freeWorld(hittable **dWorld, camera **dCamera) {
-    for (hittable *cur = (*dWorld)->nextObject; cur != nullptr; cur = cur->nextObject) {
-        // printf("Object %d: %f %f %f\n", (int)cur, ((sphere *)(cur))->center0[0], ((sphere *)(cur))->center0[1], ((sphere *)(cur))->center0[2]);
+    for (hittable *cur = (*dWorld)->nextObject; cur != nullptr; cur = cur->nextObject) 
         delete cur;
-    }
     delete *dWorld;
     delete *dCamera;
 }
@@ -129,8 +125,12 @@ int main(int argc, char const *argv[]) {
     int nx = IMAGE_WIDTH;
     int ny = IMAGE_HEIGHT;
     int ns = SAMPLE_PER_PIXEL;
-    int tx = 32;
-    int ty = 32;
+    int tx = 16;
+    int ty = 16;
+
+    size_t stackSize;
+    checkCudaErrors(cudaDeviceGetLimit(&stackSize, cudaLimitStackSize));
+    std::cerr << "CUDA Stack Size Limit: " << stackSize << " bytes\n";
 
     std::cerr << "Rendering a " << nx << "x" << ny << " image with " << ns << " samples per pixel ";
     std::cerr << "in " << tx << "x" << ty << " blocks.\n";

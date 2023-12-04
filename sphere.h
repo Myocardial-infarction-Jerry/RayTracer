@@ -34,7 +34,6 @@ public:
 };
 
 __device__ bool sphere::hit(const ray &r, const interval &rayT, hitRecord &rec) const {
-    float tMin = rayT.min, tMax = rayT.max;
     vec3 center = isMoving ? sphereCenter(r.time()) : center0;
     vec3 oc = r.origin() - center;
     float a = dot(r.direction(), r.direction());
@@ -46,7 +45,7 @@ __device__ bool sphere::hit(const ray &r, const interval &rayT, hitRecord &rec) 
         return false;
 
     float temp = (-b - sqrt(discriminant)) / a;
-    if (temp < tMax && temp > tMin) {
+    if (temp < rayT.max && temp > rayT.min) {
         rec.T = temp;
         rec.p = r.at(rec.T);
         rec.normal = (rec.p - center) / radius;
@@ -55,7 +54,7 @@ __device__ bool sphere::hit(const ray &r, const interval &rayT, hitRecord &rec) 
     }
 
     temp = (-b + sqrt(discriminant)) / a;
-    if (temp < tMax && temp > tMin) {
+    if (temp < rayT.max && temp > rayT.min) {
         rec.T = temp;
         rec.p = r.at(rec.T);
         rec.normal = (rec.p - center) / radius;
