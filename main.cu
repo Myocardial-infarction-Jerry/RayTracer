@@ -1,5 +1,6 @@
 #include <iostream>
 #include <chrono>
+#include <stdio.h>
 
 #include "utils.h"
 #include "material.h"
@@ -116,8 +117,10 @@ __global__ void render(vec3 *fb, int maxX, int maxY, int ns, camera **cam, hitta
 }
 
 __global__ void freeWorld(hittable **dWorld, camera **dCamera) {
-    for (hittable *cur = (*dWorld)->nextObject; cur != nullptr; cur = cur->nextObject)
+    for (hittable *cur = (*dWorld)->nextObject; cur != nullptr; cur = cur->nextObject) {
+        // printf("Object %d: %f %f %f\n", (int)cur, ((sphere *)(cur))->center0[0], ((sphere *)(cur))->center0[1], ((sphere *)(cur))->center0[2]);
         delete cur;
+    }
     delete *dWorld;
     delete *dCamera;
 }
@@ -180,9 +183,9 @@ int main(int argc, char const *argv[]) {
         }
     }
 
-    checkCudaErrors(cudaDeviceSynchronize());
     freeWorld << <1, 1 >> > (dWorld, dCamera);
     checkCudaErrors(cudaGetLastError());
+    checkCudaErrors(cudaDeviceSynchronize());
     checkCudaErrors(cudaFree(dCamera));
     checkCudaErrors(cudaFree(dWorld));
     checkCudaErrors(cudaFree(dRandState));
