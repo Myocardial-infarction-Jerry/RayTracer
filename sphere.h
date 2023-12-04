@@ -1,60 +1,68 @@
-#ifndef SPHEREH
-#define SPHEREH
+#ifndef SPHERE_H
+#define SPHERE_H
 
-#include "hitable.h"
+#include "utils.h"
+#include "aabb.h"
+#include "hittable.h"
 
-class sphere : public hitable {
+class sphere :public hittable {
 public:
     __device__ sphere() {}
-    __device__ sphere(vec3 cen, float r, material *m) : center1(cen), radius(r), mat_ptr(m), is_moving(false) {
-        vec3 rvec = vec3(r, r, r);
-        bbox = aabb(cen - rvec, cen + rvec);
-    };
-    __device__ sphere(point3 _center1, point3 _center2, float r, material *m) : center1(_center1), radius(r), mat_ptr(m), is_moving(true) {
-        center_vec = _center2 - _center1;
-        vec3 rvec = vec3(r, r, r);
-        aabb box1(_center1 - rvec, _center1 + rvec);
-        aabb box2(_center2 - rvec, _center2 + rvec);
-        bbox = aabb(box1, box2);
-    };
+    __device__ sphere(vec3 center, float r, material *m) :center0(center), radius(r), matPtr(m), isMoving(false) {
+        vec3 rvec(r, r, r);
+        bbox = aabb(center - rvec, center + rvec);
+    }
+    __device__ sphere(vec3 u, vec3 v, float r, material *m) : center0(u), radius(r), matPtr(m), isMoving(true) {
+        centerVec = v - u;
+        vec3 rvec(r, r, r);
+        aabb bbox1(u - rvec, u + rvec);
+        aabb bbox2(v - rvec, v + rvec);
+        bbox = aabb(bbox1, bbox2);
+    }
 
-    __device__ virtual bool hit(const ray &r, float tmin, float tmax, hit_record &rec) const;
-    __device__  aabb bounding_box() const { return bbox; }
-    __device__ point3 sphere_center(double time) const { return center1 + time * center_vec; }
+    __device__ virtual bool hit(const ray &r, const interval &rayT, hitRecord &rec) const;
+    __device__ virtual aabb boundingBox() const { return bbox; }
+    __device__ vec3 sphereCenter(double time) const { return center0 + time * centerVec; }
 
-    vec3 center1;
-    bool is_moving;
-    vec3 center_vec;
+    // private:
+    vec3 center0;
+    bool isMoving;
+    vec3 centerVec;
     float radius;
-    material *mat_ptr;
+    material *matPtr;
     aabb bbox;
 };
 
-__device__ bool sphere::hit(const ray &r, float t_min, float t_max, hit_record &rec) const {
-    point3 center = is_moving ? sphere_center(r.time()) : center1;
+__device__ bool sphere::hit(const ray &r, const interval &rayT, hitRecord &rec) const {
+    float tMin = rayT.min, tMax = rayT.max;
+    vec3 center = isMoving ? sphereCenter(r.time()) : center0;
     vec3 oc = r.origin() - center;
     float a = dot(r.direction(), r.direction());
     float b = dot(oc, r.direction());
     float c = dot(oc, oc) - radius * radius;
     float discriminant = b * b - a * c;
-    if (discriminant > 0) {
-        float temp = (-b - sqrt(discriminant)) / a;
-        if (temp < t_max && temp > t_min) {
-            rec.t = temp;
-            rec.p = r.point_at_parameter(rec.t);
-            rec.normal = (rec.p - center) / radius;
-            rec.mat_ptr = mat_ptr;
-            return true;
-        }
-        temp = (-b + sqrt(discriminant)) / a;
-        if (temp < t_max && temp > t_min) {
-            rec.t = temp;
-            rec.p = r.point_at_parameter(rec.t);
-            rec.normal = (rec.p - center) / radius;
-            rec.mat_ptr = mat_ptr;
-            return true;
-        }
+
+    if (discriminant <= 0)
+        return false;
+
+    float temp = (-b - sqrt(discriminant)) / a;
+    if (temp < tMax && temp > tMin) {
+        rec.T = temp;
+        rec.p = r.at(rec.T);
+        rec.normal = (rec.p - center) / radius;
+        rec.matPtr = matPtr;
+        return true;
     }
+
+    temp = (-b + sqrt(discriminant)) / a;
+    if (temp < tMax && temp > tMin) {
+        rec.T = temp;
+        rec.p = r.at(rec.T);
+        rec.normal = (rec.p - center) / radius;
+        rec.matPtr = matPtr;
+        return true;
+    }
+
     return false;
 }
 

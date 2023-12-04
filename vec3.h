@@ -1,5 +1,5 @@
-#ifndef VEC3H
-#define VEC3H
+#ifndef VEC3_H
+#define VEC3_H
 
 #include <math.h>
 #include <stdlib.h>
@@ -30,8 +30,10 @@ public:
 
     __host__ __device__ inline float length() const { return sqrt(e[0] * e[0] + e[1] * e[1] + e[2] * e[2]); }
     __host__ __device__ inline float squared_length() const { return e[0] * e[0] + e[1] * e[1] + e[2] * e[2]; }
+    __host__ __device__ inline vec3 unit() const { return *this / length(); }
     __host__ __device__ inline void make_unit_vector();
 
+    __host__ __device__ inline friend vec3 operator/(vec3 v, float t);
 
     float e[3];
 };
@@ -134,10 +136,6 @@ __host__ __device__ inline vec3 &vec3::operator/=(const float t) {
     e[1] *= k;
     e[2] *= k;
     return *this;
-}
-
-__host__ __device__ inline vec3 unit_vector(vec3 v) {
-    return v / v.length();
 }
 
 using point3 = vec3;
