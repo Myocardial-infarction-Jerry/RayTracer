@@ -90,7 +90,7 @@ __global__ void randomSphere(hittable **dWorld, camera **dCamera, int nx, int ny
 
     curandState localRandState = *randState;
     *dWorld = new hittable_list();
-    ((hittable_list *)(*dWorld))->background = vec3(0.5f, 0.7f, 1.0f);
+    ((hittable_list *)(*dWorld))->background = vec3(0.5f, 0.7f, 1.0f) * 0.2f;
     ((hittable_list *)(*dWorld))->add(new sphere(vec3(0.0f, -10000.0f, -1.0f), 10000.0f, new lambertian(new checkerTexture(0.32f, vec3(.2f, .3f, .1f), vec3(.9f, .9f, .9f)))));
 
     for (int i = -11; i < 11; ++i)
@@ -108,13 +108,14 @@ __global__ void randomSphere(hittable **dWorld, camera **dCamera, int nx, int ny
     ((hittable_list *)(*dWorld))->add(new sphere(vec3(0, 1, 0), 1.0, new dielectric(1.5)));
     ((hittable_list *)(*dWorld))->add(new sphere(vec3(-4, 1, 0), 1.0, new lambertian(vec3(0.4, 0.2, 0.1))));
     ((hittable_list *)(*dWorld))->add(new sphere(vec3(4, 1, 0), 1.0, new metal(vec3(0.7, 0.6, 0.5), 0.0)));
-    // ((hittable_list *)(*dWorld))->add(new sphere(vec3(-4, 2, 4), 0.5, new diffuseLight(vec3(20, 20, 20))));
+    ((hittable_list *)(*dWorld))->add(new sphere(vec3(4, 8, 3), 3, new diffuseLight(vec3(1, .9, .6) * 10.0f)));
     *randState = localRandState;
+    // (*dWorld) = (hittable_list *)(new bvhNode(*dWorld));
 
-    vec3 lookFrom(13, 2, 3);
+    vec3 lookFrom(0, 2, 14);
     vec3 lookAt(0, 0, 0);
     float focusLen = 10.0f;
-    float aperture = 0.1f;
+    float aperture = 0.01f;
     *dCamera = new camera(
         lookFrom,
         lookAt,
@@ -158,8 +159,8 @@ int main(int argc, char const *argv[]) {
     int nx = IMAGE_WIDTH;
     int ny = IMAGE_HEIGHT;
     int ns = SAMPLE_PER_PIXEL;
-    int tx = 32;
-    int ty = 32;
+    int tx = 16;
+    int ty = 16;
     size_t stackSize = 2048;
 
     checkCudaErrors(cudaDeviceSetLimit(cudaLimitStackSize, stackSize));
@@ -187,7 +188,7 @@ int main(int argc, char const *argv[]) {
     checkCudaErrors(cudaMalloc((void **)&dWorld, sizeof(hittable *)));
     camera **dCamera;
     checkCudaErrors(cudaMalloc((void **)&dCamera, sizeof(camera *)));
-    switch (1) {
+    switch (0) {
     case 0:
         randomSphere << <1, 1 >> > (dWorld, dCamera, nx, ny, dRandState_);
         break;

@@ -36,6 +36,7 @@ public:
             rec.T = temp;
             rec.p = r.at(rec.T);
             rec.normal = (rec.p - center) / radius;
+            getSphereUV(rec.normal, rec.u, rec.v);
             rec.matPtr = matPtr;
             return true;
         }
@@ -45,6 +46,7 @@ public:
             rec.T = temp;
             rec.p = r.at(rec.T);
             rec.normal = (rec.p - center) / radius;
+            getSphereUV(rec.normal, rec.u, rec.v);
             rec.matPtr = matPtr;
             return true;
         }
@@ -53,6 +55,13 @@ public:
     }
     __device__ virtual aabb boundingBox() const { return bbox; }
     __device__ vec3 sphereCenter(double time) const { return center0 + time * centerVec; }
+
+    __device__ static void getSphereUV(const vec3 &p, float &u, float &v) {
+        float theta = acos(-p.y());
+        float phi = atan2(-p.z(), p.x()) + M_PI;
+        u = phi / (2 * M_PI);
+        v = theta / M_PI;
+    }
 
     // private:
     vec3 center0;

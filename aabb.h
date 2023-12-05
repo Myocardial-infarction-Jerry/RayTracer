@@ -36,8 +36,11 @@ public:
             auto t0 = (axis(a).min - orig) * invD;
             auto t1 = (axis(a).max - orig) * invD;
 
-            if (invD < 0)
-                std::swap(t0, t1);
+            if (invD < 0) {
+                auto t = t0;
+                t0 = t1;
+                t1 = t;
+            }
 
             if (t0 > rayT.min) rayT.min = t0;
             if (t1 < rayT.max) rayT.max = t1;

@@ -3,11 +3,12 @@
 
 #include <curand_kernel.h>
 #include <cuda_runtime.h>
+#include <iostream>
 
 #define IMAGE_WIDTH 1920
 #define IMAGE_HEIGHT 1080
 #define SAMPLE_PER_PIXEL 1000
-#define RAY_DEPTH 50
+#define RAY_DEPTH 30
 #define RAND_SEED 1984
 
 #define RANDVEC3 vec3(curand_uniform(localRandState), curand_uniform(localRandState), curand_uniform(localRandState))
