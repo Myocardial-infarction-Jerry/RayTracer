@@ -3,6 +3,7 @@
 
 #include "utils.h"
 #include "vec3.h"
+#include "perlin.h"
 
 class texture {
 public:
@@ -42,6 +43,16 @@ public:
 private:
     float invScale;
     texture *even, *odd;
+};
+
+class noiseTexture :public texture {
+public:
+    __device__ noiseTexture() {}
+
+    __device__ vec3 value(const float &u, const float &v, const vec3 &p) const override { return vec3(1, 1, 1) * noise.noise(p); }
+
+private:
+    perlin noise;
 };
 
 #endif

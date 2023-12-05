@@ -8,11 +8,11 @@
 class sphere :public hittable {
 public:
     __device__ sphere() {}
-    __device__ sphere(vec3 center, float r, material *m) :center0(center), radius(r), matPtr(m), isMoving(false) {
+    __device__ sphere(const vec3 &center, const float &r, material *m) :center0(center), radius(r), matPtr(m), isMoving(false) {
         vec3 rvec(r, r, r);
         bbox = aabb(center - rvec, center + rvec);
     }
-    __device__ sphere(vec3 u, vec3 v, float r, material *m) : center0(u), radius(r), matPtr(m), isMoving(true) {
+    __device__ sphere(const vec3 &u, const vec3 &v, const float &r, material *m) : center0(u), radius(r), matPtr(m), isMoving(true) {
         centerVec = v - u;
         vec3 rvec(r, r, r);
         aabb bbox1(u - rvec, u + rvec);
@@ -54,7 +54,7 @@ public:
         return false;
     }
     __device__ virtual aabb boundingBox() const { return bbox; }
-    __device__ vec3 sphereCenter(double time) const { return center0 + time * centerVec; }
+    __device__ vec3 sphereCenter(const float &time) const { return center0 + time * centerVec; }
 
     __device__ static void getSphereUV(const vec3 &p, float &u, float &v) {
         float theta = acos(-p.y());

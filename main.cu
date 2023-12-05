@@ -33,10 +33,6 @@ __device__ vec3 getColor(const ray &r, hittable **world, curandState *localRandS
     for (int depth = 0; depth < RAY_DEPTH; ++depth) {
         hitRecord rec;
         if (!(*world)->hit(curRay, interval(0.001f, FLT_MAX), rec)) {
-            // vec3 unitDirection = curRay.direction().unit();
-            // float t = 0.5f * (unitDirection.y() + 1.0f);
-            // vec3 c = (1.0f - t) * vec3(1.0f, 1.0f, 1.0f) + t * vec3(0.5f, 0.7f, 1.0f);
-            // color += curAttenuation * c * 1;
             color += curAttenuation * ((hittable_list *)(*world))->background;
             return color;
         }
@@ -110,7 +106,7 @@ __global__ void randomSphere(hittable **dWorld, camera **dCamera, int nx, int ny
     ((hittable_list *)(*dWorld))->add(new sphere(vec3(4, 1, 0), 1.0, new metal(vec3(0.7, 0.6, 0.5), 0.0)));
     ((hittable_list *)(*dWorld))->add(new sphere(vec3(4, 8, 3), 3, new diffuseLight(vec3(1, .9, .6) * 10.0f)));
     *randState = localRandState;
-    // (*dWorld) = (hittable_list *)(new bvhNode(*dWorld));
+    bvhNode::buildFromList(dWorld);
 
     vec3 lookFrom(0, 2, 14);
     vec3 lookAt(0, 0, 0);
@@ -127,7 +123,7 @@ __global__ void randomSphere(hittable **dWorld, camera **dCamera, int nx, int ny
     );
 }
 
-__global__ void twoSphere(hittable **dWorld,camera **dCamera,int nx,int ny,curandState *randState){
+__global__ void twoSphere(hittable **dWorld, camera **dCamera, int nx, int ny, curandState *randState) {
     if (threadIdx.x != 0 || blockIdx.x != 0)
         return;
 
@@ -139,6 +135,7 @@ __global__ void twoSphere(hittable **dWorld,camera **dCamera,int nx,int ny,curan
     ((hittable_list *)(*dWorld))->add(new sphere(vec3(0, -10, 0), 10, new lambertian(checker)));
     ((hittable_list *)(*dWorld))->add(new sphere(vec3(0, 10, 0), 10, new lambertian(checker)));
     *randState = localRandState;
+    bvhNode::buildFromList(dWorld);
 
     vec3 lookFrom(13, 2, 3);
     vec3 lookAt(0, 0, 0);
@@ -149,6 +146,35 @@ __global__ void twoSphere(hittable **dWorld,camera **dCamera,int nx,int ny,curan
         lookAt,
         vec3(0, 1, 0),
         30.0,
+        float(nx) / float(ny),
+        aperture,
+        focusLen
+    );
+}
+
+__global__ void twoPerlinSphere(hittable **dWorld, camera **dCamera, int nx, int ny, curandState *randState) {
+    if (threadIdx.x != 0 || blockIdx.x != 0)
+        return;
+
+    curandState localRandState = *randState;
+    *dWorld = new hittable_list();
+    ((hittable_list *)(*dWorld))->background = vec3(0.5f, 0.7f, 1.0f);
+
+    auto pertext = new noiseTexture();
+    ((hittable_list *)(*dWorld))->add(new sphere(vec3(0, -1000, 0), 1000, new lambertian(pertext)));
+    ((hittable_list *)(*dWorld))->add(new sphere(vec3(0, 2, 0), 2, new lambertian(pertext)));
+    *randState = localRandState;
+    bvhNode::buildFromList(dWorld);
+
+    vec3 lookFrom(13, 2, 3);
+    vec3 lookAt(0, 0, 0);
+    float focusLen = 10.0f;
+    float aperture = 0.1f;
+    *dCamera = new camera(
+        lookFrom,
+        lookAt,
+        vec3(0, 1, 0),
+        20.0,
         float(nx) / float(ny),
         aperture,
         focusLen
@@ -188,16 +214,20 @@ int main(int argc, char const *argv[]) {
     checkCudaErrors(cudaMalloc((void **)&dWorld, sizeof(hittable *)));
     camera **dCamera;
     checkCudaErrors(cudaMalloc((void **)&dCamera, sizeof(camera *)));
-    switch (0) {
+    switch (2) {
     case 0:
         randomSphere << <1, 1 >> > (dWorld, dCamera, nx, ny, dRandState_);
         break;
     case 1:
         twoSphere << <1, 1 >> > (dWorld, dCamera, nx, ny, dRandState_);
         break;
+    case 2:
+        twoPerlinSphere << <1, 1 >> > (dWorld, dCamera, nx, ny, dRandState_);
+        break;
     }
     checkCudaErrors(cudaGetLastError());
     checkCudaErrors(cudaDeviceSynchronize());
+    std::cerr << "World created.\n";
 
     auto start = std::chrono::high_resolution_clock::now();
 

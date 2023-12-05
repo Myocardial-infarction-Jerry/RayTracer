@@ -10,7 +10,7 @@ NVCCFLAGS      = $(NVCC_DBG) -m64
 GENCODE_FLAGS  = -gencode arch=compute_86,code=sm_86
 
 SRCS = main.cu
-INCS = vec3.h ray.h hittable.h hittable_list.h sphere.h camera.h material.h utils.h interval.h aabb.h bvh.h
+INCS = vec3.h ray.h hittable.h hittable_list.h sphere.h camera.h material.h utils.h interval.h aabb.h bvh.h perlin.h
 
 RayTracer: RayTracer.o
 	$(NVCC) $(NVCCFLAGS) $(GENCODE_FLAGS) -o RayTracer RayTracer.o
@@ -27,4 +27,4 @@ debug: RayTracer
 	lldb ./RayTracer
 
 clean:
-	rm -f RayTracer RayTracer.o out.ppm out.jpg
+	rm -f RayTracer RayTracer.o out.ppm out.png
