@@ -4,10 +4,11 @@
 #include <curand_kernel.h>
 #include <cuda_runtime.h>
 
-const int IMAGE_WIDTH = 1920;
-const int IMAGE_HEIGHT = 1080;
-const int SAMPLE_PER_PIXEL = 1;
-const int RAY_DEPTH = 50;
+#define IMAGE_WIDTH 1920
+#define IMAGE_HEIGHT 1080
+#define SAMPLE_PER_PIXEL 1000
+#define RAY_DEPTH 50
+#define RAND_SEED 1984
 
 #define RANDVEC3 vec3(curand_uniform(localRandState), curand_uniform(localRandState), curand_uniform(localRandState))
 

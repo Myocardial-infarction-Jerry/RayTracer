@@ -6,8 +6,9 @@ class hitRecord;
 #include "utils.h"
 #include "ray.h"
 #include "hittable.h"
+#include "texture.h"
 
-__device__ float schlick(float cosine, float refIdx) {
+__device__ float schlick(const float &cosine, const float &refIdx) {
     float r0 = (1.0f - refIdx) / (1.0f + refIdx);
     r0 = r0 * r0;
     return r0 + (1.0f - r0) * pow((1.0f - cosine), 5.0f);
@@ -30,12 +31,13 @@ public:
         ray &scattered,
         curandState *localRandState
     ) const = 0;
-    __device__ virtual vec3 emitted(double u, double v, const vec3 &p) const { return vec3(0.0f, 0.0f, 0.0f); }
+    __device__ virtual vec3 emitted(const float &u, const float &v, const vec3 &p) const { return vec3(0.0f, 0.0f, 0.0f); }
 };
 
 class lambertian :public material {
 public:
-    __device__ lambertian(const vec3 &a) :albedo(a) {}
+    __device__ lambertian(texture *a) :albedo(a) {}
+    __device__ lambertian(const vec3 &a) : albedo(new solidColor(a)) {}
     __device__ virtual bool scatter(
         const ray &rIn,
         const hitRecord &rec,
@@ -45,17 +47,17 @@ public:
     ) const override {
         vec3 target = rec.p + rec.normal + randomInUnitSphere(localRandState);
         scattered = ray(rec.p, target - rec.p, rIn.time());
-        attenuation = albedo;
+        attenuation = albedo->value(rec.u, rec.v, rec.p);
         return true;
     }
 
     // private:
-    vec3 albedo;
+    texture *albedo;
 };
 
 class metal :public material {
 public:
-    __device__ metal(const vec3 &a, float f) :albedo(a) { fuzz = (f < 1) ? f : 1.0f; }
+    __device__ metal(const vec3 &a, const float &f) :albedo(a) { fuzz = (f < 1) ? f : 1.0f; }
     __device__ virtual bool scatter(
         const ray &rIn,
         const hitRecord &rec,
@@ -76,7 +78,7 @@ public:
 
 class dielectric :public material {
 public:
-    __device__ dielectric(float ri) :refIdx(ri) {}
+    __device__ dielectric(const float &ri) :refIdx(ri) {}
     __device__ virtual bool scatter(
         const ray &rIn,
         const hitRecord &rec,
@@ -121,7 +123,8 @@ public:
 
 class diffuseLight :public material {
 public:
-    __device__ diffuseLight(vec3 color) :albedo(color) {}
+    __device__ diffuseLight(texture *t) :emit(t) {}
+    __device__ diffuseLight(const vec3 &color) : emit(new solidColor(color)) {}
 
     __device__ virtual bool scatter(
         const ray &rIn,
@@ -133,10 +136,30 @@ public:
         return false;
     }
 
-    __device__ vec3 emitted(double u, double v, const vec3 &p) const override { return albedo; }
+    __device__ vec3 emitted(const float &u, const float &v, const vec3 &p) const override { return emit->value(u, v, p); }
 
     // private:
-    vec3 albedo;
+    texture *emit;
+};
+
+class isotropic : public material {
+public:
+    __device__ isotropic(texture *t) :albedo(t) {}
+    __device__ isotropic(const vec3 &color) : albedo(new solidColor(color)) {}
+
+    __device__ virtual bool scatter(
+        const ray &rIn,
+        const hitRecord &rec,
+        vec3 &attenuation,
+        ray &scattered,
+        curandState *localRandState
+    ) const override {
+        scattered = ray(rec.p, RANDVEC3.unit(), rIn.time());
+        attenuation = albedo->value(rec.u, rec.v, rec.p);
+        return true;
+    }
+
+    texture *albedo;
 };
 
 #endif

@@ -10,6 +10,7 @@ class material;
 class hitRecord {
 public:
     float T;
+    float u, v;
     vec3 p;
     vec3 normal;
     material *matPtr;
