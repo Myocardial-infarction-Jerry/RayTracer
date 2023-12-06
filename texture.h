@@ -47,8 +47,7 @@ private:
 
 class noiseTexture :public texture {
 public:
-    __device__ noiseTexture() {}
-    __device__ noiseTexture(const float &_scale) :scale(_scale) {}
+    __device__ noiseTexture(const float &_scale, curandState *randState) : scale(_scale), noise(randState) {}
 
     __device__ vec3 value(const float &u, const float &v, const vec3 &p) const override {
         auto s = scale * p;

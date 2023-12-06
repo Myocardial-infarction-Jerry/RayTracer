@@ -10,7 +10,7 @@ public:
     interval x, y, z;
 
     __device__ aabb() {}
-    __device__ aabb(const interval &ix, const interval &iy, const interval &iz) :x(ix), y(iy), z(iz) {}
+    __device__ aabb(const interval &ix, const interval &iy, const interval &iz) : x(ix), y(iy), z(iz) {}
     __device__ aabb(const vec3 &a, const vec3 &b) {
         x = interval(fmin(a[0], b[0]), fmax(a[0], b[0]));
         y = interval(fmin(a[1], b[1]), fmax(a[1], b[1]));
@@ -23,7 +23,7 @@ public:
     }
 
     __device__ aabb pad() {
-        float delta = 0.001f;
+        float delta = 0.0001f;
         interval newX = (x.size() >= delta) ? x : x.expand(delta);
         interval newY = (y.size() >= delta) ? y : y.expand(delta);
         interval newZ = (z.size() >= delta) ? z : z.expand(delta);

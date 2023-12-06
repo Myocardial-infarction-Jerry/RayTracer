@@ -7,9 +7,8 @@
 
 class bvhNode :public hittable {
 public:
-    __device__ bvhNode(hittable *_left = nullptr, hittable *_right = nullptr) :left(_left), right(_right) {
-        if (left != nullptr) bbox = aabb(bbox, left->boundingBox());
-        if (right != nullptr) bbox = aabb(bbox, right->boundingBox());
+    __device__ bvhNode(hittable *_left, hittable *_right) :left(_left), right(_right) {
+        bbox = aabb(left->boundingBox(), right->boundingBox());
     }
 
     __device__ virtual bool hit(const ray &r, const interval &rayT, hitRecord &rec) const override {
@@ -35,7 +34,7 @@ public:
         for (cur = cur->nextObject; cur != nullptr; cur = cur->nextObject)
             listLen++;
 
-        for (int i = 0; i < listLen; ++i) {
+        for (int i = 0; i < listLen - 1; ++i) {
             cur = *objList;
             for (int j = 0; j < listLen - 1; ++j) {
                 auto p = cur->nextObject;
@@ -74,15 +73,12 @@ public:
                 q = p->nextObject;
                 if (q == nullptr) {
                     cur->nextObject = p;
-                    p->nextObject = nullptr;
                     break;
                 }
             }
         }
 
-        cur = (*objList)->nextObject;
-        delete *objList;
-        *objList = cur;
+        // (*objList) = (*objList)->nextObject;
     }
 
     // private:

@@ -10,9 +10,11 @@
 
 #define IMAGE_WIDTH 600
 #define IMAGE_HEIGHT 600
-#define SAMPLE_PER_PIXEL 100
+#define SAMPLE_PER_PIXEL 1000
 #define RAY_DEPTH 50
-#define RAND_SEED 2023
+#define RAND_SEED 1145141919
+
+__device__ int *dSeed;
 
 #define RANDVEC3 vec3(curand_uniform(localRandState), curand_uniform(localRandState), curand_uniform(localRandState))
 

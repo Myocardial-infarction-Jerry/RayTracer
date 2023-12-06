@@ -47,6 +47,10 @@ public:
         curandState *localRandState
     ) const override {
         vec3 scatterDirection = rec.normal + randomInUnitSphere(localRandState).unit();
+
+        if (scatterDirection.nearZero())
+            scatterDirection = rec.normal;
+
         scattered = ray(rec.p, scatterDirection, rIn.time());
         attenuation = albedo->value(rec.u, rec.v, rec.p);
         return true;

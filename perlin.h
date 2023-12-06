@@ -6,9 +6,8 @@
 
 class perlin {
 public:
-    __device__ perlin() {
-        curandState localRandState;
-        curand_init(RAND_SEED, 10, 0, &localRandState);
+    __device__ perlin(curandState *randState) {
+        curandState localRandState = *randState;
         randVec = new vec3[perlin::pointCount];
         for (int i = 0; i < perlin::pointCount; ++i)
             randVec[i] = vec3(RND * 2 - 1, RND * 2 - 1, RND * 2 - 1);
@@ -16,6 +15,7 @@ public:
         permX = perlinGeneratePerm(localRandState);
         permY = perlinGeneratePerm(localRandState);
         permZ = perlinGeneratePerm(localRandState);
+        *randState = localRandState;
     }
 
     __device__ ~perlin() {

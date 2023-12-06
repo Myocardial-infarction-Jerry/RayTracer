@@ -6,7 +6,7 @@ NVCC           = $(CUDA_PATH)/bin/nvcc -ccbin $(HOST_COMPILER)
 NVCC_DBG       = -g -G
 # NVCC_DBG       =
 
-NVCCFLAGS      = $(NVCC_DBG) -m64
+NVCCFLAGS      = $(NVCC_DBG) -m64 -std=c++17
 GENCODE_FLAGS  = -gencode arch=compute_86,code=sm_86
 
 SRCS = main.cu

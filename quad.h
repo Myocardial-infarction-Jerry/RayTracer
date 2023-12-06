@@ -59,7 +59,7 @@ public:
 };
 
 __device__ hittable *box(const vec3 &a, const vec3 &b, material *mat) {
-    auto sides = new hittable_list();
+    hittable *sides = new hittable_list();
 
     auto min = point3(fmin(a.x(), b.x()), fmin(a.y(), b.y()), fmin(a.z(), b.z()));
     auto max = point3(fmax(a.x(), b.x()), fmax(a.y(), b.y()), fmax(a.z(), b.z()));
@@ -68,16 +68,16 @@ __device__ hittable *box(const vec3 &a, const vec3 &b, material *mat) {
     auto dy = vec3(0, max.y() - min.y(), 0);
     auto dz = vec3(0, 0, max.z() - min.z());
 
-    sides->add(new quad(vec3(min.x(), min.y(), max.z()), dx, dy, mat)); // front
-    sides->add(new quad(vec3(max.x(), min.y(), max.z()), -dz, dy, mat)); // right
-    sides->add(new quad(vec3(max.x(), min.y(), min.z()), -dx, dy, mat)); // back
-    sides->add(new quad(vec3(min.x(), min.y(), min.z()), dz, dy, mat)); // left
-    sides->add(new quad(vec3(min.x(), max.y(), max.z()), dx, -dz, mat)); // top
-    sides->add(new quad(vec3(min.x(), min.y(), min.z()), dx, dz, mat)); // bottom
+    ((hittable_list *)(sides))->add(new quad(vec3(min.x(), min.y(), max.z()), dx, dy, mat)); // front
+    ((hittable_list *)(sides))->add(new quad(vec3(max.x(), min.y(), max.z()), -dz, dy, mat)); // right
+    ((hittable_list *)(sides))->add(new quad(vec3(max.x(), min.y(), min.z()), -dx, dy, mat)); // back
+    ((hittable_list *)(sides))->add(new quad(vec3(min.x(), min.y(), min.z()), dz, dy, mat)); // left
+    ((hittable_list *)(sides))->add(new quad(vec3(min.x(), max.y(), max.z()), dx, -dz, mat)); // top
+    ((hittable_list *)(sides))->add(new quad(vec3(min.x(), min.y(), min.z()), dx, dz, mat)); // bottom
 
-    // bvhNode::buildFromList(&sides);
+    bvhNode::buildFromList(&sides);
 
-    return sides;
+    return sides->nextObject;
 }
 
 #endif

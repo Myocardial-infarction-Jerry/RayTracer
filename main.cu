@@ -29,7 +29,7 @@ __device__ vec3 getColor(const ray &r, hittable **world, curandState *localRandS
 
         ray scattered;
         vec3 attenuation = vec3(0.0f, 0.0f, 0.0f);
-        vec3 colorFromEmission = rec.matPtr->emitted(0.0, 0.0, attenuation);
+        vec3 colorFromEmission = rec.matPtr->emitted(rec.u, rec.v, rec.p);
         color += colorFromEmission * curAttenuation;
         if (!rec.matPtr->scatter(curRay, rec, attenuation, scattered, localRandState))
             return color;
@@ -76,7 +76,7 @@ __global__ void randomSphere(hittable **dWorld, camera **dCamera, int nx, int ny
 
     curandState localRandState = *randState;
     *dWorld = new hittable_list();
-    WORLD->background = vec3(0.5f, 0.7f, 1.0f) * 0.2f;
+    WORLD->background = vec3(0.5f, 0.7f, 1.0f) * 1.0f;
     WORLD->add(new sphere(vec3(0.0f, -10000.0f, -1.0f), 10000.0f, new lambertian(new checkerTexture(0.32f, vec3(.2f, .3f, .1f), vec3(.9f, .9f, .9f)))));
 
     for (int i = -11; i < 11; ++i)
@@ -96,7 +96,7 @@ __global__ void randomSphere(hittable **dWorld, camera **dCamera, int nx, int ny
     WORLD->add(new sphere(vec3(4, 1, 0), 1.0, new metal(vec3(0.7, 0.6, 0.5), 0.0)));
     WORLD->add(new sphere(vec3(4, 8, 3), 3, new diffuseLight(vec3(1, .9, .6) * 10.0f)));
     *randState = localRandState;
-    // bvhNode::buildFromList(dWorld);
+    bvhNode::buildFromList(dWorld);
 
     vec3 lookFrom(0, 2, 14);
     vec3 lookAt(0, 0, 0);
@@ -125,7 +125,7 @@ __global__ void twoSphere(hittable **dWorld, camera **dCamera, int nx, int ny, c
     WORLD->add(new sphere(vec3(0, -10, 0), 10, new lambertian(checker)));
     WORLD->add(new sphere(vec3(0, 10, 0), 10, new lambertian(checker)));
     *randState = localRandState;
-    // bvhNode::buildFromList(dWorld);
+    bvhNode::buildFromList(dWorld);
 
     vec3 lookFrom(13, 2, 3);
     vec3 lookAt(0, 0, 0);
@@ -150,11 +150,11 @@ __global__ void twoPerlinSphere(hittable **dWorld, camera **dCamera, int nx, int
     *dWorld = new hittable_list();
     WORLD->background = vec3(0.5f, 0.7f, 1.0f);
 
-    auto pertext = new noiseTexture(4);
+    auto pertext = new noiseTexture(4, randState);
     WORLD->add(new sphere(vec3(0, -1000, 0), 1000, new lambertian(pertext)));
     WORLD->add(new sphere(vec3(0, 2, 0), 2, new lambertian(pertext)));
     *randState = localRandState;
-    // bvhNode::buildFromList(dWorld);
+    bvhNode::buildFromList(dWorld);
 
     vec3 lookFrom(13, 2, 3);
     vec3 lookAt(0, 0, 0);
@@ -193,7 +193,7 @@ __global__ void quads(hittable **dWorld, camera **dCamera, int nx, int ny, curan
     WORLD->add(new quad(vec3(-2, -3, 5), vec3(4, 0, 0), vec3(0, 0, -4), lower_teal));
 
     *randState = localRandState;
-    // bvhNode::buildFromList(dWorld);
+    bvhNode::buildFromList(dWorld);
 
     vec3 lookFrom(0, 0, 9);
     vec3 lookAt(0, 0, 0);
@@ -218,7 +218,7 @@ __global__ void simpleLight(hittable **dWorld, camera **dCamera, int nx, int ny,
     *dWorld = new hittable_list();
     WORLD->background = vec3(0, 0, 0);
 
-    auto pertext = new noiseTexture(4);
+    auto pertext = new noiseTexture(4, randState);
     WORLD->add(new sphere(vec3(0, -1000, 0), 1000, new lambertian(pertext)));
     WORLD->add(new sphere(vec3(0, 2, 0), 2, new lambertian(pertext)));
 
@@ -227,7 +227,7 @@ __global__ void simpleLight(hittable **dWorld, camera **dCamera, int nx, int ny,
     WORLD->add(new quad(vec3(3, 1, -2), vec3(2, 0, 0), vec3(0, 2, 0), light));
 
     *randState = localRandState;
-    // bvhNode::buildFromList(dWorld);
+    bvhNode::buildFromList(dWorld);
 
     vec3 lookFrom(26, 3, 6);
     vec3 lookAt(0, 2, 0);
@@ -275,7 +275,7 @@ __global__ void cornellBox(hittable **dWorld, camera **dCamera, int nx, int ny, 
     WORLD->add(box2);
 
     *randState = localRandState;
-    // bvhNode::buildFromList(dWorld);
+    bvhNode::buildFromList(dWorld);
 
     vec3 lookFrom(278, 278, -800);
     vec3 lookAt(278, 278, 0);
@@ -307,7 +307,7 @@ __global__ void cornellSmoke(hittable **dWorld, camera **dCamera, int nx, int ny
 
     WORLD->add(new quad(vec3(555, 0, 0), vec3(0, 555, 0), vec3(0, 0, 555), green));
     WORLD->add(new quad(vec3(0, 0, 0), vec3(0, 555, 0), vec3(0, 0, 555), red));
-    WORLD->add(new quad(vec3(343, 554, 332), vec3(-130, 0, 0), vec3(0, 0, -105), light));
+    WORLD->add(new quad(vec3(113, 554, 127), vec3(330, 0, 0), vec3(0, 0, 305), light));
     WORLD->add(new quad(vec3(0, 0, 0), vec3(555, 0, 0), vec3(0, 0, 555), white));
     WORLD->add(new quad(vec3(555, 555, 555), vec3(-555, 0, 0), vec3(0, 0, -555), white));
     WORLD->add(new quad(vec3(0, 0, 555), vec3(555, 0, 0), vec3(0, 555, 0), white));
@@ -315,17 +315,92 @@ __global__ void cornellSmoke(hittable **dWorld, camera **dCamera, int nx, int ny
     hittable *box1 = box(vec3(0, 0, 0), vec3(165, 330, 165), white);
     box1 = new rotateY(box1, 15);
     box1 = new translate(box1, vec3(265, 0, 295));
-    WORLD->add(new constant_medium(box1, 0.01, vec3(0, 0, 0)));
 
     hittable *box2 = box(vec3(0, 0, 0), vec3(165, 165, 165), white);
     box2 = new rotateY(box2, -18);
     box2 = new translate(box2, vec3(130, 0, 65));
-    WORLD->add(new constant_medium(box2, 0.01, vec3(1, 1, 1)));
+
+    WORLD->add(new constant_medium(box1, 0.01, vec3(0, 0, 0), randState));
+    WORLD->add(new constant_medium(box2, 0.01, vec3(1, 1, 1), randState));
 
     *randState = localRandState;
-    // bvhNode::buildFromList(dWorld);
+    bvhNode::buildFromList(dWorld);
 
     vec3 lookFrom(278, 278, -800);
+    vec3 lookAt(278, 278, 0);
+    float focusLen = 10.0f;
+    float aperture = .0f;
+    *dCamera = new camera(
+        lookFrom,
+        lookAt,
+        vec3(0, 1, 0),
+        40.0,
+        float(nx) / float(ny),
+        aperture,
+        focusLen
+    );
+}
+
+__global__ void finalScene(hittable **dWorld, camera **dCamera, int nx, int ny, curandState *randState) {
+    if (threadIdx.x != 0 || blockIdx.x != 0)
+        return;
+
+    curandState localRandState = *randState;
+    *dWorld = new hittable_list();
+    WORLD->background = vec3(0, 0, 0);
+
+    int boxes_per_side = 20;
+    auto ground = new lambertian(vec3(0.48, 0.83, 0.53));
+    for (int i = 0; i < boxes_per_side; i++) {
+        for (int j = 0; j < boxes_per_side; j++) {
+            auto w = 100.0;
+            auto x0 = -1000.0 + i * w;
+            auto z0 = -1000.0 + j * w;
+            auto y0 = 0.0;
+            auto x1 = x0 + w;
+            auto y1 = RND * 100 + 1;
+            auto z1 = z0 + w;
+
+            WORLD->add(box(vec3(x0, y0, z0), vec3(x1, y1, z1), ground));
+        }
+    }
+
+    auto light = new diffuseLight(vec3(7, 7, 7));
+    WORLD->add(new quad(vec3(123, 554, 147), vec3(300, 0, 0), vec3(0, 0, 265), light));
+
+    auto center1 = vec3(400, 400, 200);
+    auto center2 = center1 + vec3(30, 0, 0);
+    auto sphere_material = new lambertian(vec3(0.7, 0.3, 0.1));
+    WORLD->add(new sphere(center1, center2, 50, sphere_material));
+
+    WORLD->add(new sphere(vec3(260, 150, 45), 50, new dielectric(1.5)));
+    WORLD->add(new sphere(
+        vec3(0, 150, 145), 50, new metal(vec3(0.8, 0.8, 0.9), 1.0)
+    ));
+
+    auto boundary = new sphere(vec3(360, 150, 145), 70, new dielectric(1.5));
+    WORLD->add(boundary);
+    WORLD->add(new constant_medium(boundary, 0.2, vec3(0.2, 0.4, 0.9), randState));
+    boundary = new sphere(vec3(0, 0, 0), 5000, new dielectric(1.5));
+    WORLD->add(new constant_medium(boundary, .0001, vec3(1, 1, 1), randState));
+
+    // auto emat = new lambertian(new image_texture("earthmap.jpg"));
+    // WORLD->add(new sphere(vec3(400,200,400), 100, emat));
+    // auto pertext = new noise_texture(0.1);
+    // WORLD->add(new sphere(vec3(220,280,300), 80, new lambertian(pertext)));
+
+    auto balls = new hittable_list();
+    auto white = new lambertian(vec3(.73, .73, .73));
+    int ns = 1000;
+    for (int j = 0; j < ns; j++) {
+        balls->add(new sphere(vec3(RND, RND, RND) * 165, 10, white));
+    }
+    WORLD->add(new translate(new rotateY(balls, 15), vec3(-100, 270, 395)));
+
+    *randState = localRandState;
+    bvhNode::buildFromList(dWorld);
+
+    vec3 lookFrom(478, 278, -600);
     vec3 lookAt(278, 278, 0);
     float focusLen = 10.0f;
     float aperture = .0f;
@@ -348,9 +423,13 @@ int main(int argc, char const *argv[]) {
     int nx = IMAGE_WIDTH;
     int ny = IMAGE_HEIGHT;
     int ns = SAMPLE_PER_PIXEL;
-    int tx = 16;
-    int ty = 16;
-    size_t stackSize = 4096;
+    int tx = 32;
+    int ty = 32;
+    size_t stackSize = 1 << 12;
+
+    int seed = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+    checkCudaErrors(cudaMalloc((void **)&dSeed, sizeof(int)));
+    checkCudaErrors(cudaMemcpy(dSeed, &seed, sizeof(int), cudaMemcpyHostToDevice));
 
     checkCudaErrors(cudaDeviceSetLimit(cudaLimitStackSize, stackSize));
     std::cerr << "CUDA Stack Size Limit: " << stackSize << " bytes\n";
@@ -377,7 +456,7 @@ int main(int argc, char const *argv[]) {
     checkCudaErrors(cudaMalloc((void **)&dWorld, sizeof(hittable *)));
     camera **dCamera;
     checkCudaErrors(cudaMalloc((void **)&dCamera, sizeof(camera *)));
-    switch (5) {
+    switch (7) {
     case 0:
         randomSphere << <1, 1 >> > (dWorld, dCamera, nx, ny, dRandState_);;
         break;
@@ -398,6 +477,9 @@ int main(int argc, char const *argv[]) {
         break;
     case 6:
         cornellSmoke << <1, 1 >> > (dWorld, dCamera, nx, ny, dRandState_);
+        break;
+    case 7:
+        finalScene << <1, 1 >> > (dWorld, dCamera, nx, ny, dRandState_);
         break;
     }
     checkCudaErrors(cudaGetLastError());

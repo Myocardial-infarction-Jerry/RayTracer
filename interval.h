@@ -4,7 +4,7 @@
 class interval {
 public:
     __device__ interval() {}
-    __device__ interval(const float &_min, const float &_max) :min(_min), max(_max) {}
+    __device__ interval(const float &_min, const float &_max) : min(_min), max(_max) {}
     __device__ interval(const interval &a, const interval &b) : min(fmin(a.min, b.min)), max(fmax(a.max, b.max)) {}
 
     __device__ bool contains(const float &x) const { return min <= x && x <= max; }

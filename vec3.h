@@ -30,8 +30,12 @@ public:
 
     __host__ __device__ inline float length() const { return sqrt(e[0] * e[0] + e[1] * e[1] + e[2] * e[2]); }
     __host__ __device__ inline float squared_length() const { return e[0] * e[0] + e[1] * e[1] + e[2] * e[2]; }
-    __host__ __device__ inline vec3 unit() const { return *this / length(); }
+    __host__ __device__ inline vec3 unit() const { auto len = length(); return vec3(e[0] / len, e[1] / len, e[2] / len); }
     __host__ __device__ inline void make_unit_vector();
+    __host__ __device__ inline bool nearZero() const {
+        float delta = 1E-6;
+        return fabs(e[0]) < delta && fabs(e[1]) < delta && fabs(e[2]) < delta;
+    }
 
     __host__ __device__ inline friend vec3 operator/(const vec3 &v, const float &t);
 
@@ -89,9 +93,9 @@ __host__ __device__ inline float dot(const vec3 &v1, const vec3 &v2) {
 
 __host__ __device__ inline vec3 cross(const vec3 &v1, const vec3 &v2) {
     return vec3(
-        (v1.e[1] * v2.e[2] - v1.e[2] * v2.e[1]),
-        (-(v1.e[0] * v2.e[2] - v1.e[2] * v2.e[0])),
-        (v1.e[0] * v2.e[1] - v1.e[1] * v2.e[0])
+        v1[1] * v2[2] - v1[2] * v2[1],
+        v1[2] * v2[0] - v1[0] * v2[2],
+        v1[0] * v2[1] - v1[1] * v2[0]
     );
 }
 
