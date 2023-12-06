@@ -38,6 +38,7 @@ public:
         rec.T = t;
         rec.p = intersection;
         rec.matPtr = matPtr;
+        rec.setFaceNormal(r, normal);
 
         return true;
     }

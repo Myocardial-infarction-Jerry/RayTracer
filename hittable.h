@@ -9,11 +9,17 @@ class material;
 
 class hitRecord {
 public:
+    __device__ void setFaceNormal(const ray &r, const vec3 &outwardNormal) {
+        frontFace = dot(r.direction(), outwardNormal) < 0;
+        normal = frontFace ? outwardNormal : -outwardNormal;
+    }
+
     float T;
     float u, v;
     vec3 p;
     vec3 normal;
     material *matPtr;
+    bool frontFace;
 };
 
 class hittable {

@@ -8,10 +8,10 @@
 #include <chrono>
 #include <stdio.h>
 
-#define IMAGE_WIDTH 600
-#define IMAGE_HEIGHT 600
-#define SAMPLE_PER_PIXEL 1000
-#define RAY_DEPTH 50
+#define IMAGE_WIDTH 800
+#define IMAGE_HEIGHT 800
+#define SAMPLE_PER_PIXEL 10000
+#define RAY_DEPTH 40
 #define RAND_SEED 1145141919
 
 __device__ int *dSeed;

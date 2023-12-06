@@ -34,6 +34,10 @@ __device__ vec3 getColor(const ray &r, hittable **world, curandState *localRandS
         if (!rec.matPtr->scatter(curRay, rec, attenuation, scattered, localRandState))
             return color;
 
+        // float scatteringPdf = rec.matPtr->scatteringPdf(r, rec, scattered);
+        // float pdf = 1 / (2 * M_PI);
+        // curAttenuation *= scatteringPdf / pdf;
+
         curAttenuation *= attenuation;
         curRay = scattered;
     }
@@ -264,7 +268,8 @@ __global__ void cornellBox(hittable **dWorld, camera **dCamera, int nx, int ny, 
     WORLD->add(new quad(vec3(555, 555, 555), vec3(-555, 0, 0), vec3(0, 0, -555), white));
     WORLD->add(new quad(vec3(0, 0, 555), vec3(555, 0, 0), vec3(0, 555, 0), white));
 
-    hittable *box1 = box(vec3(0, 0, 0), vec3(165, 330, 165), white);
+    auto aluminum = new metal(vec3(0.8, 0.85, 0.88), 0.0);
+    hittable *box1 = box(vec3(0, 0, 0), vec3(165, 330, 165), aluminum);
     box1 = new rotateY(box1, 15);
     box1 = new translate(box1, vec3(265, 0, 295));
     WORLD->add(box1);
@@ -303,7 +308,7 @@ __global__ void cornellSmoke(hittable **dWorld, camera **dCamera, int nx, int ny
     auto red = new lambertian(vec3(.65, .05, .05));
     auto white = new lambertian(vec3(.73, .73, .73));
     auto green = new lambertian(vec3(.12, .45, .15));
-    auto light = new diffuseLight(vec3(15, 15, 15));
+    auto light = new diffuseLight(vec3(7, 7, 7));
 
     WORLD->add(new quad(vec3(555, 0, 0), vec3(0, 555, 0), vec3(0, 0, 555), green));
     WORLD->add(new quad(vec3(0, 0, 0), vec3(0, 555, 0), vec3(0, 0, 555), red));
