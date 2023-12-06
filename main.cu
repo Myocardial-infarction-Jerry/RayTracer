@@ -341,14 +341,16 @@ __global__ void cornellSmoke(hittable **dWorld, camera **dCamera, int nx, int ny
 }
 
 int main(int argc, char const *argv[]) {
-    cudaDeviceReset();
+    checkCudaErrors(cudaDeviceReset());
+    checkCudaErrors(cudaGetLastError());
+    checkCudaErrors(cudaDeviceSynchronize());
 
     int nx = IMAGE_WIDTH;
     int ny = IMAGE_HEIGHT;
     int ns = SAMPLE_PER_PIXEL;
     int tx = 16;
     int ty = 16;
-    size_t stackSize = 2048;
+    size_t stackSize = 4096;
 
     checkCudaErrors(cudaDeviceSetLimit(cudaLimitStackSize, stackSize));
     std::cerr << "CUDA Stack Size Limit: " << stackSize << " bytes\n";
@@ -435,7 +437,9 @@ int main(int argc, char const *argv[]) {
     checkCudaErrors(cudaFree(dRandState));
     checkCudaErrors(cudaFree(dRandState_));
     checkCudaErrors(cudaFree(fb));
-    cudaDeviceReset();
+    checkCudaErrors(cudaDeviceReset());
+    checkCudaErrors(cudaGetLastError());
+    checkCudaErrors(cudaDeviceSynchronize());
 
     return 0;
 }
