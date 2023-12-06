@@ -17,7 +17,7 @@ __device__ float schlick(const float &cosine, const float &refIdx) {
 __device__ vec3 randomInUnitSphere(curandState *localRandState) {
     vec3 p;
     do {
-        p = 2.0f * RANDVEC3 - vec3(1, 1, 1);
+        p = RANDVEC3 * 2.0f - vec3(1, 1, 1);
     } while (p.squared_length() >= 1.0f);
     return p;
 }
@@ -46,8 +46,8 @@ public:
         ray &scattered,
         curandState *localRandState
     ) const override {
-        vec3 target = rec.p + rec.normal + randomInUnitSphere(localRandState);
-        scattered = ray(rec.p, target - rec.p, rIn.time());
+        vec3 scatterDirection = rec.normal + randomInUnitSphere(localRandState).unit();
+        scattered = ray(rec.p, scatterDirection, rIn.time());
         attenuation = albedo->value(rec.u, rec.v, rec.p);
         return true;
     }

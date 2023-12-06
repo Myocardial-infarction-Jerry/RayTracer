@@ -79,6 +79,10 @@ public:
                 }
             }
         }
+
+        cur = (*objList)->nextObject;
+        delete *objList;
+        *objList = cur;
     }
 
     // private:

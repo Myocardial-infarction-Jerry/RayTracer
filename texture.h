@@ -48,11 +48,16 @@ private:
 class noiseTexture :public texture {
 public:
     __device__ noiseTexture() {}
+    __device__ noiseTexture(const float &_scale) :scale(_scale) {}
 
-    __device__ vec3 value(const float &u, const float &v, const vec3 &p) const override { return vec3(1, 1, 1) * noise.noise(p); }
+    __device__ vec3 value(const float &u, const float &v, const vec3 &p) const override {
+        auto s = scale * p;
+        return vec3(1, 1, 1) * 0.5 * (1 + sin(s.z() + 10 * noise.turb(s)));
+    }
 
 private:
     perlin noise;
+    float scale;
 };
 
 #endif

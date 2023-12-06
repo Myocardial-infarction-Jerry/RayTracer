@@ -1,14 +1,4 @@
-#include <iostream>
-#include <chrono>
-#include <stdio.h>
-
 #include "utils.h"
-#include "material.h"
-#include "sphere.h"
-#include "camera.h"
-#include "hittable_list.h"
-#include "bvh.h"
-#include "texture.h"
 
 __global__ void randInit(curandState *randState) {
     if (threadIdx.x != 0 || blockIdx.x != 0)
@@ -86,8 +76,8 @@ __global__ void randomSphere(hittable **dWorld, camera **dCamera, int nx, int ny
 
     curandState localRandState = *randState;
     *dWorld = new hittable_list();
-    ((hittable_list *)(*dWorld))->background = vec3(0.5f, 0.7f, 1.0f) * 0.2f;
-    ((hittable_list *)(*dWorld))->add(new sphere(vec3(0.0f, -10000.0f, -1.0f), 10000.0f, new lambertian(new checkerTexture(0.32f, vec3(.2f, .3f, .1f), vec3(.9f, .9f, .9f)))));
+    WORLD->background = vec3(0.5f, 0.7f, 1.0f) * 0.2f;
+    WORLD->add(new sphere(vec3(0.0f, -10000.0f, -1.0f), 10000.0f, new lambertian(new checkerTexture(0.32f, vec3(.2f, .3f, .1f), vec3(.9f, .9f, .9f)))));
 
     for (int i = -11; i < 11; ++i)
         for (int j = -11; j < 11; ++j) {
@@ -95,18 +85,18 @@ __global__ void randomSphere(hittable **dWorld, camera **dCamera, int nx, int ny
             vec3 center(i + RND, 0.2, j + RND);
 
             if (chooseMat < 0.8f)
-                ((hittable_list *)(*dWorld))->add(new sphere(center, center + vec3(0, RND * 0.5, 0), 0.2, new lambertian(vec3(RND * RND, RND * RND, RND * RND))));
+                WORLD->add(new sphere(center, center + vec3(0, RND * 0.5, 0), 0.2, new lambertian(vec3(RND * RND, RND * RND, RND * RND))));
             else if (chooseMat < 0.95f)
-                ((hittable_list *)(*dWorld))->add(new sphere(center, 0.2, new metal(vec3(0.5f * (1.0f + RND), 0.5f * (1.0f + RND), 0.5f * (1.0f + RND)), 0.5f * RND)));
+                WORLD->add(new sphere(center, 0.2, new metal(vec3(0.5f * (1.0f + RND), 0.5f * (1.0f + RND), 0.5f * (1.0f + RND)), 0.5f * RND)));
             else
-                ((hittable_list *)(*dWorld))->add(new sphere(center, 0.2, new dielectric(1.5)));
+                WORLD->add(new sphere(center, 0.2, new dielectric(1.5)));
         }
-    ((hittable_list *)(*dWorld))->add(new sphere(vec3(0, 1, 0), 1.0, new dielectric(1.5)));
-    ((hittable_list *)(*dWorld))->add(new sphere(vec3(-4, 1, 0), 1.0, new lambertian(vec3(0.4, 0.2, 0.1))));
-    ((hittable_list *)(*dWorld))->add(new sphere(vec3(4, 1, 0), 1.0, new metal(vec3(0.7, 0.6, 0.5), 0.0)));
-    ((hittable_list *)(*dWorld))->add(new sphere(vec3(4, 8, 3), 3, new diffuseLight(vec3(1, .9, .6) * 10.0f)));
+    WORLD->add(new sphere(vec3(0, 1, 0), 1.0, new dielectric(1.5)));
+    WORLD->add(new sphere(vec3(-4, 1, 0), 1.0, new lambertian(vec3(0.4, 0.2, 0.1))));
+    WORLD->add(new sphere(vec3(4, 1, 0), 1.0, new metal(vec3(0.7, 0.6, 0.5), 0.0)));
+    WORLD->add(new sphere(vec3(4, 8, 3), 3, new diffuseLight(vec3(1, .9, .6) * 10.0f)));
     *randState = localRandState;
-    bvhNode::buildFromList(dWorld);
+    // bvhNode::buildFromList(dWorld);
 
     vec3 lookFrom(0, 2, 14);
     vec3 lookAt(0, 0, 0);
@@ -129,13 +119,13 @@ __global__ void twoSphere(hittable **dWorld, camera **dCamera, int nx, int ny, c
 
     curandState localRandState = *randState;
     *dWorld = new hittable_list();
-    ((hittable_list *)(*dWorld))->background = vec3(0.5f, 0.7f, 1.0f);
+    WORLD->background = vec3(0.5f, 0.7f, 1.0f);
 
     auto checker = new checkerTexture(0.8f, vec3(.2f, .3f, .1f), vec3(.9f, .9f, .9f));
-    ((hittable_list *)(*dWorld))->add(new sphere(vec3(0, -10, 0), 10, new lambertian(checker)));
-    ((hittable_list *)(*dWorld))->add(new sphere(vec3(0, 10, 0), 10, new lambertian(checker)));
+    WORLD->add(new sphere(vec3(0, -10, 0), 10, new lambertian(checker)));
+    WORLD->add(new sphere(vec3(0, 10, 0), 10, new lambertian(checker)));
     *randState = localRandState;
-    bvhNode::buildFromList(dWorld);
+    // bvhNode::buildFromList(dWorld);
 
     vec3 lookFrom(13, 2, 3);
     vec3 lookAt(0, 0, 0);
@@ -158,13 +148,13 @@ __global__ void twoPerlinSphere(hittable **dWorld, camera **dCamera, int nx, int
 
     curandState localRandState = *randState;
     *dWorld = new hittable_list();
-    ((hittable_list *)(*dWorld))->background = vec3(0.5f, 0.7f, 1.0f);
+    WORLD->background = vec3(0.5f, 0.7f, 1.0f);
 
-    auto pertext = new noiseTexture();
-    ((hittable_list *)(*dWorld))->add(new sphere(vec3(0, -1000, 0), 1000, new lambertian(pertext)));
-    ((hittable_list *)(*dWorld))->add(new sphere(vec3(0, 2, 0), 2, new lambertian(pertext)));
+    auto pertext = new noiseTexture(4);
+    WORLD->add(new sphere(vec3(0, -1000, 0), 1000, new lambertian(pertext)));
+    WORLD->add(new sphere(vec3(0, 2, 0), 2, new lambertian(pertext)));
     *randState = localRandState;
-    bvhNode::buildFromList(dWorld);
+    // bvhNode::buildFromList(dWorld);
 
     vec3 lookFrom(13, 2, 3);
     vec3 lookAt(0, 0, 0);
@@ -181,7 +171,178 @@ __global__ void twoPerlinSphere(hittable **dWorld, camera **dCamera, int nx, int
     );
 }
 
+__global__ void quads(hittable **dWorld, camera **dCamera, int nx, int ny, curandState *randState) {
+    if (threadIdx.x != 0 || blockIdx.x != 0)
+        return;
+
+    curandState localRandState = *randState;
+    *dWorld = new hittable_list();
+    WORLD->background = vec3(0.5f, 0.7f, 1.0f);
+
+    // Materials
+    auto left_red = new lambertian(vec3(1.0, 0.2, 0.2));
+    auto back_green = new lambertian(vec3(0.2, 1.0, 0.2));
+    auto right_blue = new lambertian(vec3(0.2, 0.2, 1.0));
+    auto upper_orange = new lambertian(vec3(1.0, 0.5, 0.0));
+    auto lower_teal = new lambertian(vec3(0.2, 0.8, 0.8));
+
+    WORLD->add(new quad(vec3(-3, -2, 5), vec3(0, 0, -4), vec3(0, 4, 0), left_red));
+    WORLD->add(new quad(vec3(-2, -2, 0), vec3(4, 0, 0), vec3(0, 4, 0), back_green));
+    WORLD->add(new quad(vec3(3, -2, 1), vec3(0, 0, 4), vec3(0, 4, 0), right_blue));
+    WORLD->add(new quad(vec3(-2, 3, 1), vec3(4, 0, 0), vec3(0, 0, 4), upper_orange));
+    WORLD->add(new quad(vec3(-2, -3, 5), vec3(4, 0, 0), vec3(0, 0, -4), lower_teal));
+
+    *randState = localRandState;
+    // bvhNode::buildFromList(dWorld);
+
+    vec3 lookFrom(0, 0, 9);
+    vec3 lookAt(0, 0, 0);
+    float focusLen = 10.0f;
+    float aperture = .0f;
+    *dCamera = new camera(
+        lookFrom,
+        lookAt,
+        vec3(0, 1, 0),
+        80.0,
+        float(nx) / float(ny),
+        aperture,
+        focusLen
+    );
+}
+
+__global__ void simpleLight(hittable **dWorld, camera **dCamera, int nx, int ny, curandState *randState) {
+    if (threadIdx.x != 0 || blockIdx.x != 0)
+        return;
+
+    curandState localRandState = *randState;
+    *dWorld = new hittable_list();
+    WORLD->background = vec3(0, 0, 0);
+
+    auto pertext = new noiseTexture(4);
+    WORLD->add(new sphere(vec3(0, -1000, 0), 1000, new lambertian(pertext)));
+    WORLD->add(new sphere(vec3(0, 2, 0), 2, new lambertian(pertext)));
+
+    auto light = new diffuseLight(vec3(4, 4, 4));
+    WORLD->add(new sphere(vec3(0, 7, 0), 2, light));
+    WORLD->add(new quad(vec3(3, 1, -2), vec3(2, 0, 0), vec3(0, 2, 0), light));
+
+    *randState = localRandState;
+    // bvhNode::buildFromList(dWorld);
+
+    vec3 lookFrom(26, 3, 6);
+    vec3 lookAt(0, 2, 0);
+    float focusLen = 10.0f;
+    float aperture = .0f;
+    *dCamera = new camera(
+        lookFrom,
+        lookAt,
+        vec3(0, 1, 0),
+        20.0,
+        float(nx) / float(ny),
+        aperture,
+        focusLen
+    );
+}
+
+__global__ void cornellBox(hittable **dWorld, camera **dCamera, int nx, int ny, curandState *randState) {
+    if (threadIdx.x != 0 || blockIdx.x != 0)
+        return;
+
+    curandState localRandState = *randState;
+    *dWorld = new hittable_list();
+    WORLD->background = vec3(0, 0, 0);
+
+    auto red = new lambertian(vec3(.65, .05, .05));
+    auto white = new lambertian(vec3(.73, .73, .73));
+    auto green = new lambertian(vec3(.12, .45, .15));
+    auto light = new diffuseLight(vec3(15, 15, 15));
+
+    WORLD->add(new quad(vec3(555, 0, 0), vec3(0, 555, 0), vec3(0, 0, 555), green));
+    WORLD->add(new quad(vec3(0, 0, 0), vec3(0, 555, 0), vec3(0, 0, 555), red));
+    WORLD->add(new quad(vec3(343, 554, 332), vec3(-130, 0, 0), vec3(0, 0, -105), light));
+    WORLD->add(new quad(vec3(0, 0, 0), vec3(555, 0, 0), vec3(0, 0, 555), white));
+    WORLD->add(new quad(vec3(555, 555, 555), vec3(-555, 0, 0), vec3(0, 0, -555), white));
+    WORLD->add(new quad(vec3(0, 0, 555), vec3(555, 0, 0), vec3(0, 555, 0), white));
+
+    hittable *box1 = box(vec3(0, 0, 0), vec3(165, 330, 165), white);
+    box1 = new rotateY(box1, 15);
+    box1 = new translate(box1, vec3(265, 0, 295));
+    WORLD->add(box1);
+
+    hittable *box2 = box(vec3(0, 0, 0), vec3(165, 165, 165), white);
+    box2 = new rotateY(box2, -18);
+    box2 = new translate(box2, vec3(130, 0, 65));
+    WORLD->add(box2);
+
+    *randState = localRandState;
+    // bvhNode::buildFromList(dWorld);
+
+    vec3 lookFrom(278, 278, -800);
+    vec3 lookAt(278, 278, 0);
+    float focusLen = 10.0f;
+    float aperture = .0f;
+    *dCamera = new camera(
+        lookFrom,
+        lookAt,
+        vec3(0, 1, 0),
+        40.0,
+        float(nx) / float(ny),
+        aperture,
+        focusLen
+    );
+}
+
+__global__ void cornellSmoke(hittable **dWorld, camera **dCamera, int nx, int ny, curandState *randState) {
+    if (threadIdx.x != 0 || blockIdx.x != 0)
+        return;
+
+    curandState localRandState = *randState;
+    *dWorld = new hittable_list();
+    WORLD->background = vec3(0, 0, 0);
+
+    auto red = new lambertian(vec3(.65, .05, .05));
+    auto white = new lambertian(vec3(.73, .73, .73));
+    auto green = new lambertian(vec3(.12, .45, .15));
+    auto light = new diffuseLight(vec3(15, 15, 15));
+
+    WORLD->add(new quad(vec3(555, 0, 0), vec3(0, 555, 0), vec3(0, 0, 555), green));
+    WORLD->add(new quad(vec3(0, 0, 0), vec3(0, 555, 0), vec3(0, 0, 555), red));
+    WORLD->add(new quad(vec3(343, 554, 332), vec3(-130, 0, 0), vec3(0, 0, -105), light));
+    WORLD->add(new quad(vec3(0, 0, 0), vec3(555, 0, 0), vec3(0, 0, 555), white));
+    WORLD->add(new quad(vec3(555, 555, 555), vec3(-555, 0, 0), vec3(0, 0, -555), white));
+    WORLD->add(new quad(vec3(0, 0, 555), vec3(555, 0, 0), vec3(0, 555, 0), white));
+
+    hittable *box1 = box(vec3(0, 0, 0), vec3(165, 330, 165), white);
+    box1 = new rotateY(box1, 15);
+    box1 = new translate(box1, vec3(265, 0, 295));
+    WORLD->add(new constant_medium(box1, 0.01, vec3(0, 0, 0)));
+
+    hittable *box2 = box(vec3(0, 0, 0), vec3(165, 165, 165), white);
+    box2 = new rotateY(box2, -18);
+    box2 = new translate(box2, vec3(130, 0, 65));
+    WORLD->add(new constant_medium(box2, 0.01, vec3(1, 1, 1)));
+
+    *randState = localRandState;
+    // bvhNode::buildFromList(dWorld);
+
+    vec3 lookFrom(278, 278, -800);
+    vec3 lookAt(278, 278, 0);
+    float focusLen = 10.0f;
+    float aperture = .0f;
+    *dCamera = new camera(
+        lookFrom,
+        lookAt,
+        vec3(0, 1, 0),
+        40.0,
+        float(nx) / float(ny),
+        aperture,
+        focusLen
+    );
+}
+
 int main(int argc, char const *argv[]) {
+    cudaDeviceReset();
+
     int nx = IMAGE_WIDTH;
     int ny = IMAGE_HEIGHT;
     int ns = SAMPLE_PER_PIXEL;
@@ -214,15 +375,27 @@ int main(int argc, char const *argv[]) {
     checkCudaErrors(cudaMalloc((void **)&dWorld, sizeof(hittable *)));
     camera **dCamera;
     checkCudaErrors(cudaMalloc((void **)&dCamera, sizeof(camera *)));
-    switch (2) {
+    switch (5) {
     case 0:
-        randomSphere << <1, 1 >> > (dWorld, dCamera, nx, ny, dRandState_);
+        randomSphere << <1, 1 >> > (dWorld, dCamera, nx, ny, dRandState_);;
         break;
     case 1:
         twoSphere << <1, 1 >> > (dWorld, dCamera, nx, ny, dRandState_);
         break;
     case 2:
         twoPerlinSphere << <1, 1 >> > (dWorld, dCamera, nx, ny, dRandState_);
+        break;
+    case 3:
+        quads << <1, 1 >> > (dWorld, dCamera, nx, ny, dRandState_);
+        break;
+    case 4:
+        simpleLight << <1, 1 >> > (dWorld, dCamera, nx, ny, dRandState_);
+        break;
+    case 5:
+        cornellBox << <1, 1 >> > (dWorld, dCamera, nx, ny, dRandState_);
+        break;
+    case 6:
+        cornellSmoke << <1, 1 >> > (dWorld, dCamera, nx, ny, dRandState_);
         break;
     }
     checkCudaErrors(cudaGetLastError());

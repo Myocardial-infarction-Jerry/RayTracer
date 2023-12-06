@@ -5,12 +5,14 @@
 #include <cuda_runtime.h>
 #include <iostream>
 #include <ctime>
+#include <chrono>
+#include <stdio.h>
 
-#define IMAGE_WIDTH 1920
-#define IMAGE_HEIGHT 1080
-#define SAMPLE_PER_PIXEL 300
+#define IMAGE_WIDTH 600
+#define IMAGE_HEIGHT 600
+#define SAMPLE_PER_PIXEL 100
 #define RAY_DEPTH 50
-#define RAND_SEED 21307289
+#define RAND_SEED 2023
 
 #define RANDVEC3 vec3(curand_uniform(localRandState), curand_uniform(localRandState), curand_uniform(localRandState))
 
@@ -29,5 +31,16 @@ void checkCuda(cudaError_t result, char const *const func, const char *const fil
 
 #define checkCudaErrors(val) checkCuda((val), #val, __FILE__, __LINE__)
 #define RND (curand_uniform(&localRandState))
+
+#define WORLD ((hittable_list *)(*dWorld))
+
+#include "material.h"
+#include "sphere.h"
+#include "camera.h"
+#include "hittable_list.h"
+#include "bvh.h"
+#include "texture.h"
+#include "quad.h"
+#include "constant_medium.h"
 
 #endif

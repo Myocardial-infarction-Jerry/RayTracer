@@ -22,6 +22,15 @@ public:
         z = interval(a.z, b.z);
     }
 
+    __device__ aabb pad() {
+        float delta = 0.001f;
+        interval newX = (x.size() >= delta) ? x : x.expand(delta);
+        interval newY = (y.size() >= delta) ? y : y.expand(delta);
+        interval newZ = (z.size() >= delta) ? z : z.expand(delta);
+
+        return aabb(newX, newY, newZ);
+    }
+
     __device__ const interval &axis(int n) const {
         if (n == 0) return x;
         if (n == 1) return y;
@@ -51,5 +60,8 @@ public:
         return true;
     }
 };
+
+__device__ inline aabb operator+(const aabb &bbox, const vec3 &offset) { return aabb(bbox.x + offset.x(), bbox.y + offset.y(), bbox.z + offset.z()); }
+__device__ inline aabb operator+(const vec3 &offset, const aabb &bbox) { return aabb(bbox.x + offset.x(), bbox.y + offset.y(), bbox.z + offset.z()); }
 
 #endif
