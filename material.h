@@ -32,7 +32,6 @@ public:
         curandState *localRandState
     ) const = 0;
     __device__ virtual vec3 emitted(const float &u, const float &v, const vec3 &p) const { return vec3(0.0f, 0.0f, 0.0f); }
-    __device__ virtual float scatteringPdf(const ray &rIn, const hitRecord &rec, const ray &scattered) const { return 0; }
 };
 
 class lambertian :public material {
@@ -55,11 +54,6 @@ public:
         scattered = ray(rec.p, scatterDirection, rIn.time());
         attenuation = albedo->value(rec.u, rec.v, rec.p);
         return true;
-    }
-
-    __device__ float scatteringPdf(const ray &rIn, const hitRecord &rec, const ray &scattered) const {
-        auto cosTheta = dot(rec.normal, scattered.direction().unit());
-        return (cosTheta < 0) ? 0 : (cosTheta / M_PI);
     }
 
     // private:

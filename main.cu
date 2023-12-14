@@ -34,10 +34,6 @@ __device__ vec3 getColor(const ray &r, hittable **world, curandState *localRandS
         if (!rec.matPtr->scatter(curRay, rec, attenuation, scattered, localRandState))
             return color;
 
-        // float scatteringPdf = rec.matPtr->scatteringPdf(r, rec, scattered);
-        // float pdf = 1 / (2 * M_PI);
-        // curAttenuation *= scatteringPdf / pdf;
-
         curAttenuation *= attenuation;
         curRay = scattered;
     }
@@ -274,7 +270,8 @@ __global__ void cornellBox(hittable **dWorld, camera **dCamera, int nx, int ny, 
     box1 = new translate(box1, vec3(265, 0, 295));
     WORLD->add(box1);
 
-    hittable *box2 = box(vec3(0, 0, 0), vec3(165, 165, 165), white);
+    auto glass = new dielectric(1.5);
+    hittable *box2 = box(vec3(0, 0, 0), vec3(165, 165, 165), glass);
     box2 = new rotateY(box2, -18);
     box2 = new translate(box2, vec3(130, 0, 65));
     WORLD->add(box2);
@@ -391,8 +388,8 @@ __global__ void finalScene(hittable **dWorld, camera **dCamera, int nx, int ny, 
 
     // auto emat = new lambertian(new image_texture("earthmap.jpg"));
     // WORLD->add(new sphere(vec3(400,200,400), 100, emat));
-    // auto pertext = new noise_texture(0.1);
-    // WORLD->add(new sphere(vec3(220,280,300), 80, new lambertian(pertext)));
+    auto pertext = new noiseTexture(0.1, randState);
+    WORLD->add(new sphere(vec3(220,280,300), 80, new lambertian(pertext)));
 
     auto balls = new hittable_list();
     auto white = new lambertian(vec3(.73, .73, .73));
@@ -461,7 +458,7 @@ int main(int argc, char const *argv[]) {
     checkCudaErrors(cudaMalloc((void **)&dWorld, sizeof(hittable *)));
     camera **dCamera;
     checkCudaErrors(cudaMalloc((void **)&dCamera, sizeof(camera *)));
-    switch (7) {
+    switch (5) {
     case 0:
         randomSphere << <1, 1 >> > (dWorld, dCamera, nx, ny, dRandState_);;
         break;

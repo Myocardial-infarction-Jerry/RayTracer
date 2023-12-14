@@ -12,19 +12,19 @@ GENCODE_FLAGS  = -gencode arch=compute_86,code=sm_86
 SRCS = main.cu
 INCS = vec3.h ray.h hittable.h hittable_list.h sphere.h camera.h material.h utils.h interval.h aabb.h bvh.h texture.h perlin.h quad.h constant_medium.h
 
-RayTracer: RayTracer.o
-	$(NVCC) $(NVCCFLAGS) $(GENCODE_FLAGS) -o RayTracer RayTracer.o
+RayTracer: main.o
+	$(NVCC) $(NVCCFLAGS) $(GENCODE_FLAGS) -o RayTracer main.o
 
-RayTracer.o: $(SRCS) $(INCS)
-	$(NVCC) $(NVCCFLAGS) $(GENCODE_FLAGS) -o RayTracer.o -c main.cu
+main.o: $(SRCS) $(INCS)
+	$(NVCC) $(NVCCFLAGS) $(GENCODE_FLAGS) -o main.o -c main.cu
 
 run: RayTracer
-	rm -f out.ppm
-	./RayTracer > out.ppm
-	convert out.ppm out.png
+	rm -f image.ppm
+	./RayTracer > image.ppm
+	convert image.ppm image.png
 	
 debug: RayTracer
 	lldb ./RayTracer
 
 clean:
-	rm -f RayTracer RayTracer.o out.ppm out.png
+	rm -f RayTracer main.o image.ppm image.png

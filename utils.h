@@ -8,9 +8,9 @@
 #include <chrono>
 #include <stdio.h>
 
-#define IMAGE_WIDTH 800
-#define IMAGE_HEIGHT 800
-#define SAMPLE_PER_PIXEL 10000
+#define IMAGE_WIDTH 1000
+#define IMAGE_HEIGHT 1000
+#define SAMPLE_PER_PIXEL 1000
 #define RAY_DEPTH 40
 #define RAND_SEED 1145141919
 
