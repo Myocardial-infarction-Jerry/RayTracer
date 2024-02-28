@@ -87,14 +87,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles /Users/qiu_nangong/Documents/GitHub/RayTracer//CMakeFiles/progress.marks
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
+	cd /Users/qiu_nangong/Documents/GitHub/RayTracer && $(CMAKE_COMMAND) -E cmake_progress_start /Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles /Users/qiu_nangong/Documents/GitHub/RayTracer/src//CMakeFiles/progress.marks
+	cd /Users/qiu_nangong/Documents/GitHub/RayTracer && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 clean
+	cd /Users/qiu_nangong/Documents/GitHub/RayTracer && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/clean
 .PHONY : clean
 
 # The main clean target
@@ -103,31 +103,56 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 preinstall
+	cd /Users/qiu_nangong/Documents/GitHub/RayTracer && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 preinstall
+	cd /Users/qiu_nangong/Documents/GitHub/RayTracer && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /Users/qiu_nangong/Documents/GitHub/RayTracer && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
-#=============================================================================
-# Target rules for targets named RayTracer
+# Convenience name for target.
+src/CMakeFiles/RayTracer.dir/rule:
+	cd /Users/qiu_nangong/Documents/GitHub/RayTracer && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/RayTracer.dir/rule
+.PHONY : src/CMakeFiles/RayTracer.dir/rule
 
-# Build rule for target.
-RayTracer: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 RayTracer
+# Convenience name for target.
+RayTracer: src/CMakeFiles/RayTracer.dir/rule
 .PHONY : RayTracer
 
 # fast build rule for target.
 RayTracer/fast:
-	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/RayTracer.dir/build.make src/CMakeFiles/RayTracer.dir/build
+	cd /Users/qiu_nangong/Documents/GitHub/RayTracer && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/RayTracer.dir/build.make src/CMakeFiles/RayTracer.dir/build
 .PHONY : RayTracer/fast
+
+main.o: main.cpp.o
+.PHONY : main.o
+
+# target to build an object file
+main.cpp.o:
+	cd /Users/qiu_nangong/Documents/GitHub/RayTracer && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/RayTracer.dir/build.make src/CMakeFiles/RayTracer.dir/main.cpp.o
+.PHONY : main.cpp.o
+
+main.i: main.cpp.i
+.PHONY : main.i
+
+# target to preprocess a source file
+main.cpp.i:
+	cd /Users/qiu_nangong/Documents/GitHub/RayTracer && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/RayTracer.dir/build.make src/CMakeFiles/RayTracer.dir/main.cpp.i
+.PHONY : main.cpp.i
+
+main.s: main.cpp.s
+.PHONY : main.s
+
+# target to generate assembly for a file
+main.cpp.s:
+	cd /Users/qiu_nangong/Documents/GitHub/RayTracer && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/RayTracer.dir/build.make src/CMakeFiles/RayTracer.dir/main.cpp.s
+.PHONY : main.cpp.s
 
 # Help Target
 help:
@@ -138,6 +163,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... RayTracer"
+	@echo "... main.o"
+	@echo "... main.i"
+	@echo "... main.s"
 .PHONY : help
 
 
@@ -149,6 +177,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /Users/qiu_nangong/Documents/GitHub/RayTracer && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 
