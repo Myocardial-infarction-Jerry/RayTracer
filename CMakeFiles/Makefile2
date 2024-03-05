@@ -63,57 +63,244 @@ CMAKE_BINARY_DIR = /Users/qiu_nangong/Documents/GitHub/RayTracer
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: src/all
+all: CMakeFiles/vec3.dir/all
+all: CMakeFiles/render.dir/all
+all: CMakeFiles/camera.dir/all
+all: CMakeFiles/entity.dir/all
+all: CMakeFiles/fragment.dir/all
+all: CMakeFiles/ray.dir/all
+all: CMakeFiles/scene.dir/all
+all: CMakeFiles/RayTracer.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
-preinstall: src/preinstall
+preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: src/clean
+clean: CMakeFiles/vec3.dir/clean
+clean: CMakeFiles/render.dir/clean
+clean: CMakeFiles/camera.dir/clean
+clean: CMakeFiles/entity.dir/clean
+clean: CMakeFiles/fragment.dir/clean
+clean: CMakeFiles/ray.dir/clean
+clean: CMakeFiles/scene.dir/clean
+clean: CMakeFiles/RayTracer.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Directory level rules for directory src
-
-# Recursive "all" directory target.
-src/all: src/CMakeFiles/RayTracer.dir/all
-.PHONY : src/all
-
-# Recursive "preinstall" directory target.
-src/preinstall:
-.PHONY : src/preinstall
-
-# Recursive "clean" directory target.
-src/clean: src/CMakeFiles/RayTracer.dir/clean
-.PHONY : src/clean
-
-#=============================================================================
-# Target rules for target src/CMakeFiles/RayTracer.dir
+# Target rules for target CMakeFiles/vec3.dir
 
 # All Build rule for target.
-src/CMakeFiles/RayTracer.dir/all:
-	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/RayTracer.dir/build.make src/CMakeFiles/RayTracer.dir/depend
-	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/RayTracer.dir/build.make src/CMakeFiles/RayTracer.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles --progress-num=1,2 "Built target RayTracer"
-.PHONY : src/CMakeFiles/RayTracer.dir/all
+CMakeFiles/vec3.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vec3.dir/build.make CMakeFiles/vec3.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vec3.dir/build.make CMakeFiles/vec3.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles --progress-num=15,16 "Built target vec3"
+.PHONY : CMakeFiles/vec3.dir/all
 
 # Build rule for subdir invocation for target.
-src/CMakeFiles/RayTracer.dir/rule: cmake_check_build_system
+CMakeFiles/vec3.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/RayTracer.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/vec3.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles 0
-.PHONY : src/CMakeFiles/RayTracer.dir/rule
+.PHONY : CMakeFiles/vec3.dir/rule
 
 # Convenience name for target.
-RayTracer: src/CMakeFiles/RayTracer.dir/rule
+vec3: CMakeFiles/vec3.dir/rule
+.PHONY : vec3
+
+# clean rule for target.
+CMakeFiles/vec3.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vec3.dir/build.make CMakeFiles/vec3.dir/clean
+.PHONY : CMakeFiles/vec3.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/render.dir
+
+# All Build rule for target.
+CMakeFiles/render.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/render.dir/build.make CMakeFiles/render.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/render.dir/build.make CMakeFiles/render.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles --progress-num=11,12 "Built target render"
+.PHONY : CMakeFiles/render.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/render.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/render.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles 0
+.PHONY : CMakeFiles/render.dir/rule
+
+# Convenience name for target.
+render: CMakeFiles/render.dir/rule
+.PHONY : render
+
+# clean rule for target.
+CMakeFiles/render.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/render.dir/build.make CMakeFiles/render.dir/clean
+.PHONY : CMakeFiles/render.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/camera.dir
+
+# All Build rule for target.
+CMakeFiles/camera.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera.dir/build.make CMakeFiles/camera.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera.dir/build.make CMakeFiles/camera.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles --progress-num=3,4 "Built target camera"
+.PHONY : CMakeFiles/camera.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/camera.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/camera.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles 0
+.PHONY : CMakeFiles/camera.dir/rule
+
+# Convenience name for target.
+camera: CMakeFiles/camera.dir/rule
+.PHONY : camera
+
+# clean rule for target.
+CMakeFiles/camera.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera.dir/build.make CMakeFiles/camera.dir/clean
+.PHONY : CMakeFiles/camera.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/entity.dir
+
+# All Build rule for target.
+CMakeFiles/entity.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/entity.dir/build.make CMakeFiles/entity.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/entity.dir/build.make CMakeFiles/entity.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles --progress-num=5,6 "Built target entity"
+.PHONY : CMakeFiles/entity.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/entity.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/entity.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles 0
+.PHONY : CMakeFiles/entity.dir/rule
+
+# Convenience name for target.
+entity: CMakeFiles/entity.dir/rule
+.PHONY : entity
+
+# clean rule for target.
+CMakeFiles/entity.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/entity.dir/build.make CMakeFiles/entity.dir/clean
+.PHONY : CMakeFiles/entity.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/fragment.dir
+
+# All Build rule for target.
+CMakeFiles/fragment.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/fragment.dir/build.make CMakeFiles/fragment.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/fragment.dir/build.make CMakeFiles/fragment.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles --progress-num=7,8 "Built target fragment"
+.PHONY : CMakeFiles/fragment.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/fragment.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/fragment.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles 0
+.PHONY : CMakeFiles/fragment.dir/rule
+
+# Convenience name for target.
+fragment: CMakeFiles/fragment.dir/rule
+.PHONY : fragment
+
+# clean rule for target.
+CMakeFiles/fragment.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/fragment.dir/build.make CMakeFiles/fragment.dir/clean
+.PHONY : CMakeFiles/fragment.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/ray.dir
+
+# All Build rule for target.
+CMakeFiles/ray.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ray.dir/build.make CMakeFiles/ray.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ray.dir/build.make CMakeFiles/ray.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles --progress-num=9,10 "Built target ray"
+.PHONY : CMakeFiles/ray.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/ray.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/ray.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles 0
+.PHONY : CMakeFiles/ray.dir/rule
+
+# Convenience name for target.
+ray: CMakeFiles/ray.dir/rule
+.PHONY : ray
+
+# clean rule for target.
+CMakeFiles/ray.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ray.dir/build.make CMakeFiles/ray.dir/clean
+.PHONY : CMakeFiles/ray.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/scene.dir
+
+# All Build rule for target.
+CMakeFiles/scene.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scene.dir/build.make CMakeFiles/scene.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scene.dir/build.make CMakeFiles/scene.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles --progress-num=13,14 "Built target scene"
+.PHONY : CMakeFiles/scene.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/scene.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/scene.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles 0
+.PHONY : CMakeFiles/scene.dir/rule
+
+# Convenience name for target.
+scene: CMakeFiles/scene.dir/rule
+.PHONY : scene
+
+# clean rule for target.
+CMakeFiles/scene.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/scene.dir/build.make CMakeFiles/scene.dir/clean
+.PHONY : CMakeFiles/scene.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/RayTracer.dir
+
+# All Build rule for target.
+CMakeFiles/RayTracer.dir/all: CMakeFiles/render.dir/all
+CMakeFiles/RayTracer.dir/all: CMakeFiles/camera.dir/all
+CMakeFiles/RayTracer.dir/all: CMakeFiles/entity.dir/all
+CMakeFiles/RayTracer.dir/all: CMakeFiles/fragment.dir/all
+CMakeFiles/RayTracer.dir/all: CMakeFiles/ray.dir/all
+CMakeFiles/RayTracer.dir/all: CMakeFiles/scene.dir/all
+CMakeFiles/RayTracer.dir/all: CMakeFiles/vec3.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RayTracer.dir/build.make CMakeFiles/RayTracer.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RayTracer.dir/build.make CMakeFiles/RayTracer.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles --progress-num=1,2 "Built target RayTracer"
+.PHONY : CMakeFiles/RayTracer.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/RayTracer.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles 16
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/RayTracer.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles 0
+.PHONY : CMakeFiles/RayTracer.dir/rule
+
+# Convenience name for target.
+RayTracer: CMakeFiles/RayTracer.dir/rule
 .PHONY : RayTracer
 
 # clean rule for target.
-src/CMakeFiles/RayTracer.dir/clean:
-	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/RayTracer.dir/build.make src/CMakeFiles/RayTracer.dir/clean
-.PHONY : src/CMakeFiles/RayTracer.dir/clean
+CMakeFiles/RayTracer.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/RayTracer.dir/build.make CMakeFiles/RayTracer.dir/clean
+.PHONY : CMakeFiles/RayTracer.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

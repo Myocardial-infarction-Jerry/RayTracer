@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc libfragment.a CMakeFiles/fragment.dir/src/fragment.cpp.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib libfragment.a

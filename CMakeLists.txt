@@ -1,21 +1,17 @@
-# 设置CMake最低版本要求
-cmake_minimum_required(VERSION 3.18)
-
-# 设置项目名称
+cmake_minimum_required(VERSION 3.10)
 project(RayTracer)
 
-# 设置C++标准
 set(CMAKE_CXX_STANDARD 14)
 
-# 启用CUDA语言
-# enable_language(CUDA)
+include_directories(include)
 
-# 如果你的CUDA版本不是默认的版本，你可以通过以下方式设置
-# set(CMAKE_CUDA_COMPILER /usr/local/cuda-8.6/bin/nvcc)
+add_library(vec3 src/vec3.cpp)
+add_library(render src/render.cpp) 
+add_library(camera src/camera.cpp) 
+add_library(entity src/entity.cpp) 
+add_library(fragment src/fragment.cpp) 
+add_library(ray src/ray.cpp) 
+add_library(scene src/scene.cpp) 
 
-# 设置CUDA标准
-# set(CMAKE_CUDA_STANDARD 14)
-# set(CMAKE_CUDA_STANDARD_REQUIRED TRUE)
-
-# 添加子目录
-add_subdirectory(src)
+add_executable(RayTracer src/main.cpp)
+target_link_libraries(RayTracer vec3 render camera entity fragment ray scene) 

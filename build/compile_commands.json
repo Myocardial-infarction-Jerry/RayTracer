@@ -1,0 +1,14 @@
+[
+{
+  "directory": "/Users/qiu_nangong/Documents/GitHub/RayTracer/build",
+  "command": "/usr/bin/clang++  -I/Users/qiu_nangong/Documents/GitHub/RayTracer/include -g -std=gnu++14 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -o CMakeFiles/vec3.dir/src/vec3.cpp.o -c /Users/qiu_nangong/Documents/GitHub/RayTracer/src/vec3.cpp",
+  "file": "/Users/qiu_nangong/Documents/GitHub/RayTracer/src/vec3.cpp",
+  "output": "CMakeFiles/vec3.dir/src/vec3.cpp.o"
+},
+{
+  "directory": "/Users/qiu_nangong/Documents/GitHub/RayTracer/build",
+  "command": "/usr/bin/clang++  -I/Users/qiu_nangong/Documents/GitHub/RayTracer/include -g -std=gnu++14 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -o CMakeFiles/RayTracer.dir/src/main.cpp.o -c /Users/qiu_nangong/Documents/GitHub/RayTracer/src/main.cpp",
+  "file": "/Users/qiu_nangong/Documents/GitHub/RayTracer/src/main.cpp",
+  "output": "CMakeFiles/RayTracer.dir/src/main.cpp.o"
+}
+]

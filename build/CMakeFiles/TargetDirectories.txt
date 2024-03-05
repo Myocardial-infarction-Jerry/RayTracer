@@ -1,0 +1,4 @@
+/Users/qiu_nangong/Documents/GitHub/RayTracer/build/CMakeFiles/vec3.dir
+/Users/qiu_nangong/Documents/GitHub/RayTracer/build/CMakeFiles/RayTracer.dir
+/Users/qiu_nangong/Documents/GitHub/RayTracer/build/CMakeFiles/edit_cache.dir
+/Users/qiu_nangong/Documents/GitHub/RayTracer/build/CMakeFiles/rebuild_cache.dir
