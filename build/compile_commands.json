@@ -1,13 +1,49 @@
 [
 {
   "directory": "/Users/qiu_nangong/Documents/GitHub/RayTracer/build",
-  "command": "/usr/bin/clang++  -I/Users/qiu_nangong/Documents/GitHub/RayTracer/include -g -std=gnu++14 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -o CMakeFiles/vec3.dir/src/vec3.cpp.o -c /Users/qiu_nangong/Documents/GitHub/RayTracer/src/vec3.cpp",
+  "command": "/usr/bin/clang++  -I/Users/qiu_nangong/Documents/GitHub/RayTracer/include -I/opt/homebrew/Cellar/opencv/4.9.0_4/include/opencv4 -g -std=gnu++14 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -o CMakeFiles/vec3.dir/src/vec3.cpp.o -c /Users/qiu_nangong/Documents/GitHub/RayTracer/src/vec3.cpp",
   "file": "/Users/qiu_nangong/Documents/GitHub/RayTracer/src/vec3.cpp",
   "output": "CMakeFiles/vec3.dir/src/vec3.cpp.o"
 },
 {
   "directory": "/Users/qiu_nangong/Documents/GitHub/RayTracer/build",
-  "command": "/usr/bin/clang++  -I/Users/qiu_nangong/Documents/GitHub/RayTracer/include -g -std=gnu++14 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -o CMakeFiles/RayTracer.dir/src/main.cpp.o -c /Users/qiu_nangong/Documents/GitHub/RayTracer/src/main.cpp",
+  "command": "/usr/bin/clang++  -I/Users/qiu_nangong/Documents/GitHub/RayTracer/include -I/opt/homebrew/Cellar/opencv/4.9.0_4/include/opencv4 -g -std=gnu++14 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -o CMakeFiles/render.dir/src/render.cpp.o -c /Users/qiu_nangong/Documents/GitHub/RayTracer/src/render.cpp",
+  "file": "/Users/qiu_nangong/Documents/GitHub/RayTracer/src/render.cpp",
+  "output": "CMakeFiles/render.dir/src/render.cpp.o"
+},
+{
+  "directory": "/Users/qiu_nangong/Documents/GitHub/RayTracer/build",
+  "command": "/usr/bin/clang++  -I/Users/qiu_nangong/Documents/GitHub/RayTracer/include -I/opt/homebrew/Cellar/opencv/4.9.0_4/include/opencv4 -g -std=gnu++14 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -o CMakeFiles/camera.dir/src/camera.cpp.o -c /Users/qiu_nangong/Documents/GitHub/RayTracer/src/camera.cpp",
+  "file": "/Users/qiu_nangong/Documents/GitHub/RayTracer/src/camera.cpp",
+  "output": "CMakeFiles/camera.dir/src/camera.cpp.o"
+},
+{
+  "directory": "/Users/qiu_nangong/Documents/GitHub/RayTracer/build",
+  "command": "/usr/bin/clang++  -I/Users/qiu_nangong/Documents/GitHub/RayTracer/include -I/opt/homebrew/Cellar/opencv/4.9.0_4/include/opencv4 -g -std=gnu++14 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -o CMakeFiles/entity.dir/src/entity.cpp.o -c /Users/qiu_nangong/Documents/GitHub/RayTracer/src/entity.cpp",
+  "file": "/Users/qiu_nangong/Documents/GitHub/RayTracer/src/entity.cpp",
+  "output": "CMakeFiles/entity.dir/src/entity.cpp.o"
+},
+{
+  "directory": "/Users/qiu_nangong/Documents/GitHub/RayTracer/build",
+  "command": "/usr/bin/clang++  -I/Users/qiu_nangong/Documents/GitHub/RayTracer/include -I/opt/homebrew/Cellar/opencv/4.9.0_4/include/opencv4 -g -std=gnu++14 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -o CMakeFiles/fragment.dir/src/fragment.cpp.o -c /Users/qiu_nangong/Documents/GitHub/RayTracer/src/fragment.cpp",
+  "file": "/Users/qiu_nangong/Documents/GitHub/RayTracer/src/fragment.cpp",
+  "output": "CMakeFiles/fragment.dir/src/fragment.cpp.o"
+},
+{
+  "directory": "/Users/qiu_nangong/Documents/GitHub/RayTracer/build",
+  "command": "/usr/bin/clang++  -I/Users/qiu_nangong/Documents/GitHub/RayTracer/include -I/opt/homebrew/Cellar/opencv/4.9.0_4/include/opencv4 -g -std=gnu++14 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -o CMakeFiles/ray.dir/src/ray.cpp.o -c /Users/qiu_nangong/Documents/GitHub/RayTracer/src/ray.cpp",
+  "file": "/Users/qiu_nangong/Documents/GitHub/RayTracer/src/ray.cpp",
+  "output": "CMakeFiles/ray.dir/src/ray.cpp.o"
+},
+{
+  "directory": "/Users/qiu_nangong/Documents/GitHub/RayTracer/build",
+  "command": "/usr/bin/clang++  -I/Users/qiu_nangong/Documents/GitHub/RayTracer/include -I/opt/homebrew/Cellar/opencv/4.9.0_4/include/opencv4 -g -std=gnu++14 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -o CMakeFiles/scene.dir/src/scene.cpp.o -c /Users/qiu_nangong/Documents/GitHub/RayTracer/src/scene.cpp",
+  "file": "/Users/qiu_nangong/Documents/GitHub/RayTracer/src/scene.cpp",
+  "output": "CMakeFiles/scene.dir/src/scene.cpp.o"
+},
+{
+  "directory": "/Users/qiu_nangong/Documents/GitHub/RayTracer/build",
+  "command": "/usr/bin/clang++  -I/Users/qiu_nangong/Documents/GitHub/RayTracer/include -isystem /opt/homebrew/Cellar/opencv/4.9.0_4/include/opencv4 -g -std=gnu++14 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -o CMakeFiles/RayTracer.dir/src/main.cpp.o -c /Users/qiu_nangong/Documents/GitHub/RayTracer/src/main.cpp",
   "file": "/Users/qiu_nangong/Documents/GitHub/RayTracer/src/main.cpp",
   "output": "CMakeFiles/RayTracer.dir/src/main.cpp.o"
 }

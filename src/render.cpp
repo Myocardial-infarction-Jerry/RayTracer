@@ -6,7 +6,6 @@
 
 void Render::render(const Scene &scene, const Camera &camera, std::vector<Vec3> &image) {
     int numWorkers = std::thread::hardware_concurrency(); // 获取可用的硬件并发线程数
-    std::cerr << "Workers: " << numWorkers << std::endl; // "numWorkers: 8\n"
 
     std::vector<std::thread> workers; // 存储所有worker线程的向量
     std::vector<Ray> rayList = camera.getRayList(); // 存储所有ray的向量
@@ -32,5 +31,5 @@ void Render::renderWorker(const Scene &scene, std::vector<Ray> rayList, std::vec
 }
 
 void Render::renderKernel(const Scene &scene, const Ray &ray, Vec3 &color, int depth) {
-    color = Vec3(randomFloat(), randomFloat(), randomFloat());
+    color = ray.pointAtParameter(1) * 0.5 + Vec3(0.5, 0.5, 0.5); // 设置背景颜色
 }

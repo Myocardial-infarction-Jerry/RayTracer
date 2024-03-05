@@ -274,13 +274,13 @@ CMakeFiles/scene.dir/clean:
 # Target rules for target CMakeFiles/RayTracer.dir
 
 # All Build rule for target.
+CMakeFiles/RayTracer.dir/all: CMakeFiles/vec3.dir/all
 CMakeFiles/RayTracer.dir/all: CMakeFiles/render.dir/all
 CMakeFiles/RayTracer.dir/all: CMakeFiles/camera.dir/all
 CMakeFiles/RayTracer.dir/all: CMakeFiles/entity.dir/all
 CMakeFiles/RayTracer.dir/all: CMakeFiles/fragment.dir/all
 CMakeFiles/RayTracer.dir/all: CMakeFiles/ray.dir/all
 CMakeFiles/RayTracer.dir/all: CMakeFiles/scene.dir/all
-CMakeFiles/RayTracer.dir/all: CMakeFiles/vec3.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/RayTracer.dir/build.make CMakeFiles/RayTracer.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/RayTracer.dir/build.make CMakeFiles/RayTracer.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles --progress-num=1,2 "Built target RayTracer"

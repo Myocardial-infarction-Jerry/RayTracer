@@ -4,7 +4,7 @@
 # compile CXX with /Library/Developer/CommandLineTools/usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/Users/qiu_nangong/Documents/GitHub/RayTracer/include
+CXX_INCLUDES = -I/Users/qiu_nangong/Documents/GitHub/RayTracer/include -isystem /opt/homebrew/Cellar/opencv/4.9.0_4/include/opencv4
 
 CXX_FLAGSarm64 = -std=gnu++14 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk
 

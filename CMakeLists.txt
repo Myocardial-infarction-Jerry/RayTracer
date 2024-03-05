@@ -3,7 +3,9 @@ project(RayTracer)
 
 set(CMAKE_CXX_STANDARD 14)
 
-include_directories(include)
+find_package(OpenCV REQUIRED)
+
+include_directories(include ${OpenCV_INCLUDE_DIRS})
 
 add_library(vec3 src/vec3.cpp)
 add_library(render src/render.cpp) 
@@ -14,4 +16,4 @@ add_library(ray src/ray.cpp)
 add_library(scene src/scene.cpp) 
 
 add_executable(RayTracer src/main.cpp)
-target_link_libraries(RayTracer vec3 render camera entity fragment ray scene) 
+target_link_libraries(RayTracer vec3 render camera entity fragment ray scene ${OpenCV_LIBS})

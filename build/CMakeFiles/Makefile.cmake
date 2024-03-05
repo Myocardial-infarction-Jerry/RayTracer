@@ -24,6 +24,8 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/opt/homebrew/Cellar/cmake/3.28.0/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake"
   "/opt/homebrew/Cellar/cmake/3.28.0/share/cmake/Modules/Compiler/Clang.cmake"
   "/opt/homebrew/Cellar/cmake/3.28.0/share/cmake/Modules/Compiler/GNU.cmake"
+  "/opt/homebrew/Cellar/cmake/3.28.0/share/cmake/Modules/FindPackageHandleStandardArgs.cmake"
+  "/opt/homebrew/Cellar/cmake/3.28.0/share/cmake/Modules/FindPackageMessage.cmake"
   "/opt/homebrew/Cellar/cmake/3.28.0/share/cmake/Modules/Platform/Apple-AppleClang-C.cmake"
   "/opt/homebrew/Cellar/cmake/3.28.0/share/cmake/Modules/Platform/Apple-AppleClang-CXX.cmake"
   "/opt/homebrew/Cellar/cmake/3.28.0/share/cmake/Modules/Platform/Apple-Clang-C.cmake"
@@ -32,6 +34,10 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/opt/homebrew/Cellar/cmake/3.28.0/share/cmake/Modules/Platform/Darwin-Initialize.cmake"
   "/opt/homebrew/Cellar/cmake/3.28.0/share/cmake/Modules/Platform/Darwin.cmake"
   "/opt/homebrew/Cellar/cmake/3.28.0/share/cmake/Modules/Platform/UnixPaths.cmake"
+  "/opt/homebrew/lib/cmake/opencv4/OpenCVConfig-version.cmake"
+  "/opt/homebrew/lib/cmake/opencv4/OpenCVConfig.cmake"
+  "/opt/homebrew/lib/cmake/opencv4/OpenCVModules-release.cmake"
+  "/opt/homebrew/lib/cmake/opencv4/OpenCVModules.cmake"
   )
 
 # The corresponding makefile is:
@@ -48,5 +54,11 @@ set(CMAKE_MAKEFILE_PRODUCTS
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/vec3.dir/DependInfo.cmake"
+  "CMakeFiles/render.dir/DependInfo.cmake"
+  "CMakeFiles/camera.dir/DependInfo.cmake"
+  "CMakeFiles/entity.dir/DependInfo.cmake"
+  "CMakeFiles/fragment.dir/DependInfo.cmake"
+  "CMakeFiles/ray.dir/DependInfo.cmake"
+  "CMakeFiles/scene.dir/DependInfo.cmake"
   "CMakeFiles/RayTracer.dir/DependInfo.cmake"
   )

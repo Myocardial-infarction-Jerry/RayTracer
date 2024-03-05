@@ -68,10 +68,13 @@
         "chrono": "cpp",
         "compare": "cpp",
         "concepts": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "numeric": "cpp",
+        "random": "cpp"
     },
     "C_Cpp.errorSquiggles": "enabled",
     "C_Cpp.default.includePath": [
-        "./include"
+        "./include",
+        "/opt/homebrew/Cellar/opencv/4.9.0_4/include/**"
     ]
 }

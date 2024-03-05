@@ -1,0 +1,123 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "RayTracer",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "RayTracer::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-RayTracer-Debug-1da4da64e65b28995c10.json",
+					"name" : "RayTracer",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "camera::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-camera-Debug-387e44c13db738a74c16.json",
+					"name" : "camera",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "entity::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-entity-Debug-7ca34864f3e694327570.json",
+					"name" : "entity",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "fragment::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-fragment-Debug-5f7dad63bd1ffc1ae7bc.json",
+					"name" : "fragment",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ray::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ray-Debug-862faa30c75806cfda26.json",
+					"name" : "ray",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "render::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-render-Debug-ea8b571d62aa8256969f.json",
+					"name" : "render",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "scene::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-scene-Debug-9fb5304781c1e2fe5429.json",
+					"name" : "scene",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "vec3::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-vec3-Debug-a546eed53a3b01b3b820.json",
+					"name" : "vec3",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Users/qiu_nangong/Documents/GitHub/RayTracer/build",
+		"source" : "/Users/qiu_nangong/Documents/GitHub/RayTracer"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

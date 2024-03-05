@@ -12,7 +12,7 @@ public:
     Vec3 origin;
     Vec3 direction;
     unsigned int source;
-    Vec3 pointAtParameter(float t);
+    Vec3 pointAtParameter(float t) const;
 };
 
 #endif
