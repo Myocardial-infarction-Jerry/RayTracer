@@ -31,5 +31,6 @@ void Render::renderWorker(const Scene &scene, std::vector<Ray> rayList, std::vec
 }
 
 void Render::renderKernel(const Scene &scene, const Ray &ray, Vec3 &color, int depth) {
-    color = ray.pointAtParameter(1) * 0.5 + Vec3(0.5, 0.5, 0.5); // 设置背景颜色
+    float alpha = 0.6;
+    color = ray.pointAtParameter(1) * (1 - alpha) + Vec3(1, 1, 1) * alpha; // 设置背景颜色
 }
