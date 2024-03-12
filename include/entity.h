@@ -19,9 +19,9 @@ public:
     std::string name;
 
 
-    static Entity ball(Vec3 position, float radius, unsigned int rings, unsigned int sectors, Material *_material);
-    static Entity rectangle(Vec3 position, Vec3 size, Material *_material);
-    static Entity cube(Vec3 position, Vec3 size, Material *_material);
+    // static Entity ball(Vec3 position, float radius, unsigned int rings, unsigned int sectors, Material *_material);
+    // static Entity rectangle(Vec3 position, Vec3 size, Material *_material);
+    // static Entity cube(Vec3 position, Vec3 size, Material *_material);
 };
 
 #endif

@@ -748,7 +748,11 @@ CMakeFiles/entity.dir/src/entity.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/c++/v1/__filesystem/path_iterator.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/c++/v1/__filesystem/recursive_directory_iterator.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/c++/v1/__filesystem/u8path.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/c++/v1/iostream \
   /Users/qiu_nangong/Documents/GitHub/RayTracer/include/vec3.h \
   /Users/qiu_nangong/Documents/GitHub/RayTracer/include/entity.h \
   /Users/qiu_nangong/Documents/GitHub/RayTracer/include/fragment.h \
-  /Users/qiu_nangong/Documents/GitHub/RayTracer/include/material.h
+  /Users/qiu_nangong/Documents/GitHub/RayTracer/include/material.h \
+  /Users/qiu_nangong/Documents/GitHub/RayTracer/include/tiny_obj_loader.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/c++/v1/map \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/c++/v1/__tree

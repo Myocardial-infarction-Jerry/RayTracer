@@ -10,7 +10,7 @@ public:
 
     Vec3 vertices[3];
     Vec3 uvs[3];
-    Vec3 normals;
+    Vec3 normals[3];
     Material *material;
 };
 

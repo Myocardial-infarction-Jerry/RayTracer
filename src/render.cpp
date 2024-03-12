@@ -5,7 +5,8 @@
 #include <iostream>
 
 void Render::render(const Scene &scene, const Camera &camera, std::vector<Vec3> &image) {
-    int numWorkers = std::thread::hardware_concurrency(); // 获取可用的硬件并发线程数
+    // int numWorkers = std::thread::hardware_concurrency(); // 获取可用的硬件并发线程数
+    int numWorkers = 4; // 将并发线程数设置为 4
 
     std::vector<std::thread> workers; // 存储所有worker线程的向量
     std::vector<Ray> rayList = camera.getRayList(); // 存储所有ray的向量
