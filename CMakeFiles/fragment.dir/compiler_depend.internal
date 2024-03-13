@@ -198,9 +198,9 @@ CMakeFiles/fragment.dir/src/fragment.cpp.o
  /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/sys/resource.h
  /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/sys/signal.h
  /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/usr/include/sys/wait.h
- /Library/Developer/CommandLineTools/usr/lib/clang/14.0.3/include/__stddef_max_align_t.h
- /Library/Developer/CommandLineTools/usr/lib/clang/14.0.3/include/stddef.h
- /Library/Developer/CommandLineTools/usr/lib/clang/14.0.3/include/stdint.h
+ /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/__stddef_max_align_t.h
+ /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/stddef.h
+ /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/stdint.h
  /Users/qiu_nangong/Documents/GitHub/RayTracer/include/fragment.h
  /Users/qiu_nangong/Documents/GitHub/RayTracer/include/material.h
  /Users/qiu_nangong/Documents/GitHub/RayTracer/include/vec3.h

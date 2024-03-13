@@ -3,7 +3,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "libentity.a"
+			"path" : "libray.a"
 		}
 	],
 	"backtrace" : 1,
@@ -26,7 +26,7 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 13,
+				"line" : 15,
 				"parent" : 0
 			},
 			{
@@ -43,7 +43,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g -std=gnu++14 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk"
+					"fragment" : "-g -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk"
 				}
 			],
 			"includes" : 
@@ -64,7 +64,7 @@
 				[
 					1
 				],
-				"standard" : "14"
+				"standard" : "11"
 			},
 			"sourceIndexes" : 
 			[
@@ -72,9 +72,9 @@
 			]
 		}
 	],
-	"id" : "entity::@6890427a1f51a3e7e1df",
-	"name" : "entity",
-	"nameOnDisk" : "libentity.a",
+	"id" : "ray::@6890427a1f51a3e7e1df",
+	"name" : "ray",
+	"nameOnDisk" : "libray.a",
 	"paths" : 
 	{
 		"build" : ".",
@@ -95,7 +95,7 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "src/entity.cpp",
+			"path" : "src/ray.cpp",
 			"sourceGroupIndex" : 0
 		}
 	],
