@@ -3,43 +3,40 @@
 #include "render.h"
 
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <opencv2/opencv.hpp>
 #include <chrono> // Include the chrono library for time measurement
 
 int main(int argc, char const *argv[]) {
-    // Scene scene;
-    // Camera camera;
-    // auto image = camera.getImage();
+    int renderMode = 0;
 
-    // // Measure the start time
-    // auto startTime = std::chrono::high_resolution_clock::now();
+    Scene scene;
+    Camera camera;
+    Entity entity; entity.load("models/cube.obj");
+    scene.addEntity(entity);
 
-    // Render::render(scene, camera, image);
+    auto image = camera.getImage();
+    auto startTime = std::chrono::high_resolution_clock::now();
+    Render::render(scene, camera, image);
+    auto endTime = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
 
-    // // Measure the end time
-    // auto endTime = std::chrono::high_resolution_clock::now();
+    cv::Mat displayImage(camera.height, camera.width, CV_8UC3);
+    for (unsigned int i = 0; i < camera.height; ++i) {
+        for (unsigned int j = 0; j < camera.width; ++j) {
+            auto color = image[i * camera.width + j];
+            displayImage.at<cv::Vec3b>(i, j) = cv::Vec3b(static_cast<int>(color[0] * 255), static_cast<int>(color[1] * 255), static_cast<int>(color[2] * 255));
+        }
+    }
+    cv::putText(displayImage, "Render Time: " + std::to_string(duration) + " ms", cv::Point(10, 30), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(255, 255, 255), 2);
+    cv::imwrite("image.png", displayImage);
 
-    // // Calculate the duration in milliseconds
-    // auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
+    if (renderMode == 1) {
+        cv::imshow("Ray Tracer", displayImage);
+        cv::waitKey(0);
+    }
 
-    // cv::Mat displayImage(camera.height, camera.width, CV_8UC3);
-    // for (unsigned int i = 0; i < camera.height; ++i) {
-    //     for (unsigned int j = 0; j < camera.width; ++j) {
-    //         auto color = image[i * camera.width + j];
-    //         displayImage.at<cv::Vec3b>(i, j) = cv::Vec3b(static_cast<int>(color.x * 255), static_cast<int>(color.y * 255), static_cast<int>(color.z * 255));
-    //     }
-    // }
-
-    // // Display the render time in the top-left corner of the image
-    // cv::putText(displayImage, "Render Time: " + std::to_string(duration) + " ms", cv::Point(10, 30), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(255, 255, 255), 2);
-
-    // cv::imwrite("image.png", displayImage); // Save the image as image.png
-    // cv::imshow("Ray Tracer", displayImage);
-    // cv::waitKey(0);
-
-    Entity cube;
-    cube.load("models/cube.obj");
 
     return 0;
 }

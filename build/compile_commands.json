@@ -25,6 +25,12 @@
 },
 {
   "directory": "/Users/qiu_nangong/Documents/GitHub/RayTracer/build",
+  "command": "/usr/bin/clang++  -I/Users/qiu_nangong/Documents/GitHub/RayTracer/include -I/opt/homebrew/Cellar/opencv/4.9.0_4/include/opencv4 -g -g -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -o CMakeFiles/aabb.dir/src/aabb.cpp.o -c /Users/qiu_nangong/Documents/GitHub/RayTracer/src/aabb.cpp",
+  "file": "/Users/qiu_nangong/Documents/GitHub/RayTracer/src/aabb.cpp",
+  "output": "CMakeFiles/aabb.dir/src/aabb.cpp.o"
+},
+{
+  "directory": "/Users/qiu_nangong/Documents/GitHub/RayTracer/build",
   "command": "/usr/bin/clang++  -I/Users/qiu_nangong/Documents/GitHub/RayTracer/include -I/opt/homebrew/Cellar/opencv/4.9.0_4/include/opencv4 -g -g -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -o CMakeFiles/fragment.dir/src/fragment.cpp.o -c /Users/qiu_nangong/Documents/GitHub/RayTracer/src/fragment.cpp",
   "file": "/Users/qiu_nangong/Documents/GitHub/RayTracer/src/fragment.cpp",
   "output": "CMakeFiles/fragment.dir/src/fragment.cpp.o"

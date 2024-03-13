@@ -169,6 +169,19 @@ entity/fast:
 .PHONY : entity/fast
 
 #=============================================================================
+# Target rules for targets named aabb
+
+# Build rule for target.
+aabb: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 aabb
+.PHONY : aabb
+
+# fast build rule for target.
+aabb/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aabb.dir/build.make CMakeFiles/aabb.dir/build
+.PHONY : aabb/fast
+
+#=============================================================================
 # Target rules for targets named fragment
 
 # Build rule for target.
@@ -219,6 +232,30 @@ RayTracer: cmake_check_build_system
 RayTracer/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/RayTracer.dir/build.make CMakeFiles/RayTracer.dir/build
 .PHONY : RayTracer/fast
+
+src/aabb.o: src/aabb.cpp.o
+.PHONY : src/aabb.o
+
+# target to build an object file
+src/aabb.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aabb.dir/build.make CMakeFiles/aabb.dir/src/aabb.cpp.o
+.PHONY : src/aabb.cpp.o
+
+src/aabb.i: src/aabb.cpp.i
+.PHONY : src/aabb.i
+
+# target to preprocess a source file
+src/aabb.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aabb.dir/build.make CMakeFiles/aabb.dir/src/aabb.cpp.i
+.PHONY : src/aabb.cpp.i
+
+src/aabb.s: src/aabb.cpp.s
+.PHONY : src/aabb.s
+
+# target to generate assembly for a file
+src/aabb.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/aabb.dir/build.make CMakeFiles/aabb.dir/src/aabb.cpp.s
+.PHONY : src/aabb.cpp.s
 
 src/camera.o: src/camera.cpp.o
 .PHONY : src/camera.o
@@ -421,6 +458,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... RayTracer"
+	@echo "... aabb"
 	@echo "... camera"
 	@echo "... entity"
 	@echo "... fragment"
@@ -428,6 +466,9 @@ help:
 	@echo "... render"
 	@echo "... scene"
 	@echo "... vec3"
+	@echo "... src/aabb.o"
+	@echo "... src/aabb.i"
+	@echo "... src/aabb.s"
 	@echo "... src/camera.o"
 	@echo "... src/camera.i"
 	@echo "... src/camera.s"

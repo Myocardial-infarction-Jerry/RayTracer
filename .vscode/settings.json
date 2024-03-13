@@ -75,7 +75,9 @@
         "list": "cpp",
         "map": "cpp",
         "queue": "cpp",
-        "set": "cpp"
+        "set": "cpp",
+        "charconv": "cpp",
+        "execution": "cpp"
     },
     "C_Cpp.errorSquiggles": "enabled",
     "C_Cpp.default.includePath": [

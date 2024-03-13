@@ -57,6 +57,7 @@ set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/render.dir/DependInfo.cmake"
   "CMakeFiles/camera.dir/DependInfo.cmake"
   "CMakeFiles/entity.dir/DependInfo.cmake"
+  "CMakeFiles/aabb.dir/DependInfo.cmake"
   "CMakeFiles/fragment.dir/DependInfo.cmake"
   "CMakeFiles/ray.dir/DependInfo.cmake"
   "CMakeFiles/scene.dir/DependInfo.cmake"

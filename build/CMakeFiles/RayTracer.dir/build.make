@@ -99,6 +99,7 @@ RayTracer: libentity.a
 RayTracer: libfragment.a
 RayTracer: libray.a
 RayTracer: libscene.a
+RayTracer: libaabb.a
 RayTracer: /opt/homebrew/lib/libopencv_gapi.4.9.0.dylib
 RayTracer: /opt/homebrew/lib/libopencv_stitching.4.9.0.dylib
 RayTracer: /opt/homebrew/lib/libopencv_alphamat.4.9.0.dylib

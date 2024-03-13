@@ -2,6 +2,7 @@
 /Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles/render.dir
 /Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles/camera.dir
 /Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles/entity.dir
+/Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles/aabb.dir
 /Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles/fragment.dir
 /Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles/ray.dir
 /Users/qiu_nangong/Documents/GitHub/RayTracer/CMakeFiles/scene.dir
