@@ -1,2 +1,0 @@
-/Library/Developer/CommandLineTools/usr/bin/ar qc libvec3.a CMakeFiles/vec3.dir/src/vec3.cpp.o
-/Library/Developer/CommandLineTools/usr/bin/ranlib libvec3.a

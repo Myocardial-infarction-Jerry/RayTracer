@@ -1,2 +1,0 @@
-/usr/bin/ar qc libfragment.a CMakeFiles/fragment.dir/src/fragment.cpp.o
-/usr/bin/ranlib libfragment.a
