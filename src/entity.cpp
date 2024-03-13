@@ -3,18 +3,18 @@
 #include <string>
 #include <vector>
 
-#include "vec3.h"
 #include "entity.h"
+#include "vec3.h"
 
-// #define TINYOBJLOADER_IMPLEMENTATION
+#define TINYOBJLOADER_IMPLEMENTATION
 #include "tiny_obj_loader.h"
 
 Entity::Entity() :name("None") {}
 Entity::~Entity() {}
 
 void Entity::load(std::string inputFile) {
-    tinyobj::ObjReaderConfig readerConfig;
-    readerConfig.mtl_search_path = "./";
+    tinyobj::ObjReaderConfig readerConfig; readerConfig.triangulate = true;
+    readerConfig.mtl_search_path = "models";
 
     tinyobj::ObjReader reader;
 
@@ -72,4 +72,6 @@ void Entity::load(std::string inputFile) {
             shapes[s].mesh.material_ids[f];
         }
     }
+
+    std::cout << "Load model " << inputFile << std::endl;
 }

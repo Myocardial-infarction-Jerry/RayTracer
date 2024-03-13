@@ -5,10 +5,13 @@
 
 class Vec3 {
 public:
-    float x, y, z;
+    float v[3];
 
     Vec3();
     Vec3(float x, float y, float z);
+
+    float &operator[](int index);
+    float operator[](int index) const;
 
     Vec3 operator+(const Vec3 &other) const;
     Vec3 operator-() const;

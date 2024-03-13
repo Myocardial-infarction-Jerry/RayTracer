@@ -79,7 +79,7 @@
     },
     "C_Cpp.errorSquiggles": "enabled",
     "C_Cpp.default.includePath": [
-        "./include",
+        "./include/**",
         "/opt/homebrew/Cellar/opencv/4.9.0_4/include/**"
     ]
 }

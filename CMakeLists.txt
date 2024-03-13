@@ -17,3 +17,8 @@ add_library(scene src/scene.cpp)
 
 add_executable(RayTracer src/main.cpp)
 target_link_libraries(RayTracer vec3 render camera entity fragment ray scene ${OpenCV_LIBS})
+
+# Enable debugging in Visual Studio Code
+set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
+

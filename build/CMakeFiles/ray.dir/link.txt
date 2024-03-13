@@ -1,0 +1,2 @@
+/usr/bin/ar qc libray.a CMakeFiles/ray.dir/src/ray.cpp.o
+/usr/bin/ranlib libray.a
