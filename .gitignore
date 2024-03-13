@@ -1,9 +1,10 @@
-.vscode
-build
-CMakeFiles
+.vscode/
+build/
+CMakeFiles/
 
 .DS_Store
 *.a
 cmake_install.cmake
 image.*
 CMakeCache.txt
+Makefile
