@@ -1,2 +1,0 @@
-/Library/Developer/CommandLineTools/usr/bin/ar qc librender.a CMakeFiles/render.dir/src/render.cpp.o
-/Library/Developer/CommandLineTools/usr/bin/ranlib librender.a
