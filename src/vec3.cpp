@@ -25,3 +25,8 @@ float Vec3::length() const { return std::sqrt(v[0] * v[0] + v[1] * v[1] + v[2] *
 Vec3 Vec3::normalize() const { float len = length(); return Vec3(v[0] / len, v[1] / len, v[2] / len); }
 
 float randomFloat() { return (float)rand() / RAND_MAX; }
+
+std::ostream &operator<<(std::ostream &os, const Vec3 &v) {
+    os << v.v[0] << " " << v.v[1] << " " << v.v[2];
+    return os;
+}

@@ -2,6 +2,7 @@
 #define VEC3_H
 
 #include <cmath>
+#include <iostream>
 
 class Vec3 {
 public:
@@ -24,6 +25,8 @@ public:
     Vec3 cross(const Vec3 &other) const;
     float length() const;
     Vec3 normalize() const;
+
+    friend std::ostream &operator<<(std::ostream &os, const Vec3 &v);
 };
 
 float randomFloat();

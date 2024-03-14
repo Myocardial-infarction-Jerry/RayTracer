@@ -2,18 +2,7 @@
 #define AABB_H
 
 #include "fragment.h"
-
-class Interval {
-public:
-    float mmin, mmax;
-
-    Interval();
-    Interval(float val);
-    Interval(float min, float max);
-
-    Interval operator+(const Interval &other);
-    Interval &operator+=(const Interval &other);
-};
+#include "interval.h"
 
 class AABB {
 public:

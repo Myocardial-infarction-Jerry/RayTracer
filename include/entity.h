@@ -13,7 +13,7 @@ public:
     Entity();
     ~Entity();
 
-    void load(std::string path);
+    void load(const char *inputFile);
 
     std::vector<Fragment> fragmentsList;
     std::string name;

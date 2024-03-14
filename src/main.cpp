@@ -13,6 +13,8 @@ int main(int argc, char const *argv[]) {
 
     Scene scene;
     Camera camera;
+    camera.position = Vec3(-5, 1, 1);
+    camera.direction = Vec3(1, 0, 0);
     Entity entity; entity.load("models/cube.obj");
     scene.addEntity(entity);
 
@@ -36,7 +38,6 @@ int main(int argc, char const *argv[]) {
         cv::imshow("Ray Tracer", displayImage);
         cv::waitKey(0);
     }
-
 
     return 0;
 }

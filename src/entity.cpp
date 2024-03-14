@@ -12,9 +12,9 @@
 Entity::Entity() :name("None") {}
 Entity::~Entity() {}
 
-void Entity::load(std::string inputFile) {
+void Entity::load(const char *inputFile) {
     tinyobj::ObjReaderConfig readerConfig; readerConfig.triangulate = true;
-    readerConfig.mtl_search_path = "models";
+    readerConfig.mtl_search_path = std::__fs::filesystem::path(inputFile).parent_path().string();
 
     tinyobj::ObjReader reader;
 
@@ -39,6 +39,7 @@ void Entity::load(std::string inputFile) {
         size_t index_offset = 0;
         for (size_t f = 0; f < shapes[s].mesh.num_face_vertices.size(); f++) {
             size_t fv = size_t(shapes[s].mesh.num_face_vertices[f]);
+            Fragment fragment;
 
             // Loop over vertices in the face.
             for (size_t v = 0; v < fv; v++) {
@@ -47,18 +48,21 @@ void Entity::load(std::string inputFile) {
                 tinyobj::real_t vx = attrib.vertices[3 * size_t(idx.vertex_index) + 0];
                 tinyobj::real_t vy = attrib.vertices[3 * size_t(idx.vertex_index) + 1];
                 tinyobj::real_t vz = attrib.vertices[3 * size_t(idx.vertex_index) + 2];
+                fragment.vertices[v] = Vec3(vx, vy, vz);
 
                 // Check if `normal_index` is zero or positive. negative = no normal data
                 if (idx.normal_index >= 0) {
                     tinyobj::real_t nx = attrib.normals[3 * size_t(idx.normal_index) + 0];
                     tinyobj::real_t ny = attrib.normals[3 * size_t(idx.normal_index) + 1];
                     tinyobj::real_t nz = attrib.normals[3 * size_t(idx.normal_index) + 2];
+                    fragment.normals[v] = Vec3(nx, ny, nz);
                 }
 
                 // Check if `texcoord_index` is zero or positive. negative = no texcoord data
                 if (idx.texcoord_index >= 0) {
                     tinyobj::real_t tx = attrib.texcoords[2 * size_t(idx.texcoord_index) + 0];
                     tinyobj::real_t ty = attrib.texcoords[2 * size_t(idx.texcoord_index) + 1];
+                    fragment.uvs[v] = Vec3(tx, ty, 0);
                 }
 
                 // Optional: vertex colors
@@ -70,8 +74,10 @@ void Entity::load(std::string inputFile) {
 
             // per-face material
             shapes[s].mesh.material_ids[f];
+
+            fragmentsList.push_back(fragment);
         }
     }
 
-    std::cout << "Load model " << inputFile << std::endl;
+    std::cerr << "Load model " << inputFile << std::endl;
 }

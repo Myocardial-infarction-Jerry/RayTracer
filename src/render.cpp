@@ -1,12 +1,14 @@
 #include "render.h"
 
+#include "interval.h"
+
 #include <thread>
 #include <vector>
 #include <iostream>
 
 void Render::render(const Scene &scene, const Camera &camera, std::vector<Vec3> &image) {
     // int numWorkers = std::thread::hardware_concurrency(); // 获取可用的硬件并发线程数
-    int numWorkers = 4; // 将并发线程数设置为 4
+    int numWorkers = 1; // 将并发线程数设置为 4
 
     std::vector<std::thread> workers; // 存储所有worker线程的向量
     std::vector<Ray> rayList = camera.getRayList(); // 存储所有ray的向量
@@ -32,6 +34,13 @@ void Render::renderWorker(const Scene &scene, std::vector<Ray> rayList, std::vec
 }
 
 void Render::renderKernel(const Scene &scene, const Ray &ray, Vec3 &color, int depth) {
-    float alpha = 0.6;
-    color = ray.pointAtParameter(1) * (1 - alpha) + Vec3(1, 1, 1) * alpha; // 设置背景颜色
+    // std::cerr << ray.origin << std::endl;
+    // std::cerr << ray.direction << std::endl;
+    for (auto &entity : scene.entitiesList) {
+        for (auto &fragment : entity.fragmentsList) {
+            hitRecord record = fragment.hit(ray);
+            if (record.hit)
+                color = color + Vec3(0.7, 0.7, 0.7);
+        }
+    }
 }
