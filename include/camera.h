@@ -11,7 +11,7 @@ public:
     Camera();
     ~Camera();
 
-    std::vector<Ray> getRayList() const;
+    std::vector<Ray> getRayList(unsigned long long start, int size) const;
     std::vector<Vec3> getImage() const;
 
     Vec3 position, direction, up;

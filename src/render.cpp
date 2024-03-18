@@ -7,25 +7,41 @@
 #include <iostream>
 
 void Render::render(const Scene &scene, const Camera &camera, std::vector<Vec3> &image) {
-    // int numWorkers = std::thread::hardware_concurrency(); // 获取可用的硬件并发线程数
-    int numWorkers = 1; // 将并发线程数设置为 4
+    int numWorkers = std::thread::hardware_concurrency(); // 获取可用的硬件并发线程数
+
+    std::cerr << "Rendering with " << numWorkers << " processes" << std::endl;
 
     std::vector<std::thread> workers; // 存储所有worker线程的向量
-    std::vector<Ray> rayList = camera.getRayList(); // 存储所有ray的向量
+    unsigned long long rayCount = camera.width * camera.height * camera.SPP;
 
     // 为每个worker线程分配任务
-    for (int i = 0; i < numWorkers; ++i) {
-        std::vector<Ray> raySubList(rayList.begin() + i * rayList.size() / numWorkers, rayList.begin() + (i + 1) * rayList.size() / numWorkers);
-        workers.push_back(std::thread(Render::renderWorker, std::ref(scene), std::ref(raySubList), std::ref(image)));
+    int threads = (rayCount + rayPerWorker - 1) / rayPerWorker;
+    for (int i = 0; i < threads; ++i) {
+        std::cerr << "\rCurrent: " << i << "/" << threads << " ";
+
+        if (i % numWorkers == 0) {
+            for (auto &worker : workers)
+                worker.join();
+            workers.clear();
+        }
+
+        workers.push_back(std::thread(Render::renderWorker, std::ref(scene), std::ref(camera), i * Render::rayPerWorker, std::ref(image)));
     }
 
-    // 等待所有worker线程完成
-    for (auto &worker : workers) {
+    for (auto &worker : workers)
         worker.join();
-    }
+
+    std::cerr << "\rDealing with SPP...          ";
+
+    for (auto &pixel : image)
+        pixel = pixel / camera.SPP;
+
+    std::cerr << "\rDone!                        " << std::endl;
 }
 
-void Render::renderWorker(const Scene &scene, std::vector<Ray> rayList, std::vector<Vec3> &image) {
+void Render::renderWorker(const Scene &scene, const Camera &camera, unsigned long long start, std::vector<Vec3> &image) {
+    std::vector<Ray> rayList = camera.getRayList(start, Render::rayPerWorker);
+
     for (unsigned int i = 0; i < rayList.size(); ++i) {
         Vec3 color;
         renderKernel(scene, rayList[i], color, 0);
@@ -34,8 +50,6 @@ void Render::renderWorker(const Scene &scene, std::vector<Ray> rayList, std::vec
 }
 
 void Render::renderKernel(const Scene &scene, const Ray &ray, Vec3 &color, int depth) {
-    // std::cerr << ray.origin << std::endl;
-    // std::cerr << ray.direction << std::endl;
     for (auto &entity : scene.entitiesList) {
         for (auto &fragment : entity.fragmentsList) {
             hitRecord record = fragment.hit(ray);
