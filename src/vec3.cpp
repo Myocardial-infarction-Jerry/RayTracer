@@ -1,6 +1,7 @@
 #include "vec3.h"
 
 Vec3::Vec3() : v{ 0,0,0 } {}
+Vec3::Vec3(float *val) : v{ val[0],val[1],val[2] } {}
 Vec3::Vec3(float x, float y, float z) : v{ x,y,z } {}
 
 float &Vec3::operator[](int index) { return v[index]; }

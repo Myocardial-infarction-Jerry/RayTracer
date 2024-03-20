@@ -50,11 +50,17 @@ void Render::renderWorker(const Scene &scene, const Camera &camera, unsigned lon
 }
 
 void Render::renderKernel(const Scene &scene, const Ray &ray, Vec3 &color, int depth) {
+    hitRecord record;
     for (auto &entity : scene.entitiesList) {
         for (auto &fragment : entity.fragmentsList) {
-            hitRecord record = fragment.hit(ray);
-            if (record.hit)
-                color = color + Vec3(0.7, 0.7, 0.7);
+            auto newRecord = fragment.hit(ray);
+            if (newRecord.hit && (!record.hit || newRecord.t < record.t))
+                record = newRecord;
         }
     }
+
+    if (record.hit && record.material != nullptr)
+        color = color + record.material->diffuse;
+
+    return;
 }

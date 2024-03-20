@@ -9,6 +9,7 @@ public:
     float v[3];
 
     Vec3();
+    Vec3(float *val);
     Vec3(float x, float y, float z);
 
     float &operator[](int index);

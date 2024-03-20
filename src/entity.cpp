@@ -31,7 +31,9 @@ void Entity::load(const char *inputFile) {
 
     auto &attrib = reader.GetAttrib();
     auto &shapes = reader.GetShapes();
-    auto &materials = reader.GetMaterials();
+    std::vector<std::shared_ptr<Material>> materials;
+    for (auto &material : reader.GetMaterials())
+        materials.push_back(std::make_shared<Material>(material));
 
     // Loop over shapes
     for (size_t s = 0; s < shapes.size(); s++) {
@@ -64,16 +66,10 @@ void Entity::load(const char *inputFile) {
                     tinyobj::real_t ty = attrib.texcoords[2 * size_t(idx.texcoord_index) + 1];
                     fragment.uvs[v] = Vec3(tx, ty, 0);
                 }
-
-                // Optional: vertex colors
-                // tinyobj::real_t red   = attrib.colors[3*size_t(idx.vertex_index)+0];
-                // tinyobj::real_t green = attrib.colors[3*size_t(idx.vertex_index)+1];
-                // tinyobj::real_t blue  = attrib.colors[3*size_t(idx.vertex_index)+2];
             }
             index_offset += fv;
 
-            // per-face material
-            shapes[s].mesh.material_ids[f];
+            fragment.material = materials[shapes[s].mesh.material_ids[f]];
 
             fragmentsList.push_back(fragment);
         }

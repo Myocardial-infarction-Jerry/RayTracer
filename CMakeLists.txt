@@ -16,9 +16,10 @@ add_library(fragment src/fragment.cpp)
 add_library(ray src/ray.cpp) 
 add_library(scene src/scene.cpp) 
 add_library(interval src/interval.cpp) 
+add_library(material src/material.cpp)
 
 add_executable(RayTracer src/main.cpp)
-target_link_libraries(RayTracer vec3 render camera entity fragment ray scene interval aabb ${OpenCV_LIBS})
+target_link_libraries(RayTracer vec3 render camera entity fragment ray scene interval material aabb ${OpenCV_LIBS})
 
 # Enable debugging in Visual Studio Code
 set(CMAKE_BUILD_TYPE Debug)

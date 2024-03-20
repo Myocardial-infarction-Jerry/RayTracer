@@ -6,7 +6,7 @@
 #include "camera.h"
 
 namespace Render {
-    const int rayPerWorker = 1000000;
+    const int rayPerWorker = 100000;
 
     void render(const Scene &scene, const Camera &camera, std::vector<Vec3> &image);
     void renderWorker(const Scene &scene, const Camera &camera, unsigned long long start, std::vector<Vec3> &image);

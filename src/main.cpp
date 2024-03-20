@@ -9,13 +9,13 @@
 #include <chrono> // Include the chrono library for time measurement
 
 int main(int argc, char const *argv[]) {
-    int renderMode = 0;
+    int renderMode = 1;
 
     Scene scene;
     Camera camera;
-    camera.position = Vec3(-5, 5, 5);
-    camera.direction = (Vec3(1, 1, 1) - camera.position).normalize();
-    Entity entity; entity.load("models/cube.obj");
+    camera.position = Vec3(278, 278, -900);
+    camera.direction = (Vec3(278, 278, 0) - camera.position).normalize();
+    Entity entity; entity.load("models/cornell_box.obj");
     scene.addEntity(entity);
 
     auto image = camera.getImage();

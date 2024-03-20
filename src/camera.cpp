@@ -1,6 +1,6 @@
 #include "camera.h"
 
-Camera::Camera() :position(0, 0, 0), direction(0, 0, 1), up(0, 1, 0), fov(M_PI / 3), lens(1), width(1920), height(1080), SPP(100) {}
+Camera::Camera() :position(0, 0, 0), direction(0, 0, 1), up(0, 1, 0), fov(M_PI / 3), lens(1), width(1920), height(1080), SPP(1) {}
 Camera::~Camera() {}
 
 std::vector<Ray> Camera::getRayList(unsigned long long start, int size) const {

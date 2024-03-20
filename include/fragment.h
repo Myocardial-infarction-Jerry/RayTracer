@@ -11,7 +11,7 @@ public:
     float t;
     Vec3 p;
     Vec3 normal;
-    Material *material;
+    std::shared_ptr<Material> material;
 };
 
 class Fragment {
@@ -23,7 +23,7 @@ public:
     Vec3 vertices[3];
     Vec3 uvs[3];
     Vec3 normals[3];
-    Material *material;
+    std::shared_ptr<Material> material;
 };
 
 #endif
