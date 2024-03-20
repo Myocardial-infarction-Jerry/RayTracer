@@ -8,3 +8,4 @@ cmake_install.cmake
 image.*
 CMakeCache.txt
 Makefile
+RayTracer
