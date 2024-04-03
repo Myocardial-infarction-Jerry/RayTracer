@@ -1,6 +1,6 @@
 #include <iostream>
 
 int main(int argc, char const *argv[]) {
-    std::cerr << "Hello world!" << std::endl;
+    std::cerr << "CornellBox to be implemented\n";
     return 0;
 }
